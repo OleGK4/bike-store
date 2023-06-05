@@ -1,4 +1,4 @@
-# Laravel api
+# Laravel API
 
 ## Build the project
 
@@ -7,12 +7,6 @@
 ```
 composer update
 composer install
-```
-
-### Npm
-
-```
-npm install
 ```
 
 ### Start local server
@@ -29,6 +23,6 @@ php artisan serve --host=192.168.13.50 --port=8000
 
 ## Documentation & Manuals
 
-- **[Code mu](https://code.mu/ru/php/framework/laravel/book/prime/)**
-- **[Russian documentation 9.x](https://github.com/russsiq/laravel-docs-ru/)**
-- **[Official documentation 9.x](https://laravel.com/docs/9.x/installation)**
+- **[Code.mu](https://code.mu/ru/php/framework/laravel/book/prime/)**
+- **[Russian Laravel documentation 9.x](https://github.com/russsiq/laravel-docs-ru/)**
+- **[Official Laravel documentation 10.x](https://laravel.com/docs/10.x/installation)**

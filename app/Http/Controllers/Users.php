@@ -8,9 +8,9 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Models\User;
 
 
-class Users extends Controller
+class Users extends BaseController
 {
     public function getUsers(){
-        User::where('id', 2)->dd();
+        return User::all();
     }
 }
