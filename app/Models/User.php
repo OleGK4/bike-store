@@ -12,8 +12,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -52,15 +52,16 @@ class User extends Authenticatable
         return $this->HasOne(Cart::class);
     }
 
-    public function reviews(): HasOne
-    {
-        return $this->HasOne(Review::class);
-    }
 
 
     // HasMany relations
     public function orders(): HasMany
     {
         return $this->HasMany(Order::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->HasMany(Review::class);
     }
 }

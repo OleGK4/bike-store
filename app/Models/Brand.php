@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Brand extends Model
 {
+    public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;
 
     // HasMany relations
