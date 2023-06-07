@@ -33,17 +33,17 @@ class Bike extends Model
 
 
     // BelongTo relations
-    public function brands(): BelongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function colors(): BelongsTo
+    public function color(): BelongsTo
     {
         return $this->belongsTo(Color::class);
     }
 
-    public function categories(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }

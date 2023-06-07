@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 06 2023 г., 09:18
+-- Время создания: Июн 07 2023 г., 13:22
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -868,6 +868,18 @@ INSERT INTO `colors` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `orders`
 --
 
@@ -893,6 +905,32 @@ CREATE TABLE `order_bikes` (
   `updated_at` date NOT NULL,
   `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `token` text COLLATE utf8mb4_general_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_general_ci NOT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `tokenable_id` int NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `personal_access_tokens`
+--
+
+INSERT INTO `personal_access_tokens` (`name`, `token`, `abilities`, `expires_at`, `tokenable_id`, `tokenable_type`, `updated_at`, `created_at`) VALUES
+('auth_token', '48e6a0e3777f215cd78866d26bca07284af880b5c2e8dc62b48b7f5719fc18db', '[\"*\"]', '2023-06-07 07:06:05', 308, 'App\\Models\\User', '2023-06-07 07:05:05', '2023-06-07 07:05:05'),
+('auth_token', '9a79f3565f5ff219336f798ba803911884a57650051c19bcfe333fc96025bfe3', '[\"*\"]', '2023-06-07 07:06:07', 309, 'App\\Models\\User', '2023-06-07 07:05:07', '2023-06-07 07:05:07'),
+('auth_token', 'd9bda3a9ad8d5ca71abe82d62e442e9a39bb2fb22c06f57dab0e9163e37a1106', '[\"*\"]', '2023-06-07 07:06:10', 310, 'App\\Models\\User', '2023-06-07 07:05:10', '2023-06-07 07:05:10');
 
 -- --------------------------------------------------------
 
@@ -1055,16 +1093,7 @@ INSERT INTO `reviews` (`id`, `bike_id`, `user_id`, `text`, `rating`, `created_at
 (138, 171, 256, 'Et labore earum aliquam accusamus. Reprehenderit veritatis voluptas fuga soluta aut sed. At fuga ad explicabo non distinctio.', 10, '2023-06-06', '2023-06-06'),
 (139, 172, 257, 'Delectus quidem amet facere velit dolor itaque repellendus. Facere et unde suscipit consequatur minima est. Blanditiis occaecati amet hic.', 2, '2023-06-06', '2023-06-06'),
 (140, 173, 257, 'Est mollitia at perferendis ut. Quis enim magni dignissimos non officia sed et. Molestiae eos vel tempora provident et nulla sed.', 1, '2023-06-06', '2023-06-06'),
-(141, 174, 257, 'Tenetur vel animi porro nobis excepturi praesentium. Nisi aut qui laboriosam qui.', 5, '2023-06-06', '2023-06-06'),
-(142, 175, 258, 'Aut voluptatem neque qui quasi qui quo. Nesciunt excepturi vitae non cupiditate assumenda. Id ipsa vitae aliquid eos commodi. Omnis illo qui eum natus sit nihil. Iste ab et quaerat voluptas.', 7, '2023-06-06', '2023-06-06'),
-(143, 176, 258, 'Mollitia dignissimos ab cumque nihil earum natus. Error est iure et et aut atque totam.', 10, '2023-06-06', '2023-06-06'),
-(144, 177, 258, 'Et iure nesciunt velit et perspiciatis aut autem quis. Ea vel dolores ex recusandae.', 7, '2023-06-06', '2023-06-06'),
-(145, 178, 259, 'Et deleniti est eligendi tempora. Quis rerum atque recusandae officia quo laboriosam. Quo aut vero molestiae explicabo dicta.', 9, '2023-06-06', '2023-06-06'),
-(146, 179, 259, 'Dolores aliquid iste iste sit id commodi. Est nulla labore nemo eveniet voluptates laudantium omnis. Dolorem ab dicta expedita.', 6, '2023-06-06', '2023-06-06'),
-(147, 180, 259, 'Tenetur vitae atque alias consequatur minus. Ipsam et enim consequuntur ut est totam. Fuga aut amet et. Sequi molestiae optio est voluptas.', 8, '2023-06-06', '2023-06-06'),
-(148, 181, 260, 'Adipisci beatae odio nihil. Sint doloribus minus sed amet. Quam velit ullam dolor possimus saepe ratione dolores.', 10, '2023-06-06', '2023-06-06'),
-(149, 182, 260, 'Ea culpa aut ea exercitationem perferendis ea quo. Quo aliquam at qui et et ipsum. Et eum quas voluptates earum similique harum odio. Possimus quis corporis voluptatem doloremque.', 10, '2023-06-06', '2023-06-06'),
-(150, 183, 260, 'Voluptate animi labore minus nihil illum fugit repellat. Sit quia consequatur tempore non. Et consequuntur et accusamus voluptatem occaecati.', 8, '2023-06-06', '2023-06-06');
+(141, 174, 257, 'Tenetur vel animi porro nobis excepturi praesentium. Nisi aut qui laboriosam qui.', 5, '2023-06-06', '2023-06-06');
 
 -- --------------------------------------------------------
 
@@ -1076,8 +1105,8 @@ CREATE TABLE `users` (
   `id` int NOT NULL COMMENT 'id клиента',
   `name` varchar(200) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'имя клиента',
   `email` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'почта клиента',
-  `phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'телефон клиента',
-  `password` varchar(150) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'пароль',
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'телефон клиента',
+  `password` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'пароль',
   `level` int NOT NULL DEFAULT '1' COMMENT 'уровень допуска'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -1141,9 +1170,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `level`) VALUES
 (255, 'Mr. Daron Weissnat V', 'georgiana.jacobs@example.net', '79534847976', '$2y$10$Fz5gucIJYlV60TG1k9XL5OXwelzpaTCgwpPlitIpif2Q7oQjAl3fO', 1),
 (256, 'Glenda Fritsch', 'maximillian67@example.net', '79535081130', '$2y$10$Iw3V921YzXSqkEWcsECAi.QgASL5hEkzkleMGqCjibB9NSKqc5ZyG', 1),
 (257, 'Francisca Schinner', 'nelson18@example.net', '79538901297', '$2y$10$i0a8f5UZYRMPC..zdudb2e9wtM2YYVlJGHMVDiC9GKmPTtaJmtV7i', 1),
-(258, 'Noemie Koss', 'rrunolfsson@example.org', '79538371373', '$2y$10$Db72tksUL.TJZYBWtT7vNOO12bVZ8GMRQa/N3gD6psLrqp7golCPS', 1),
-(259, 'Ms. Halie Becker', 'carter.mariane@example.com', '79534829075', '$2y$10$eLEGMs.x9Dz2jbwr/L3LM.7tJGc6KqtWbTqk6O2AXTPK9p1H9Fm3m', 1),
-(260, 'Shawna Jacobi', 'sjacobson@example.com', '79532932251', '$2y$10$XUSkWNhW8aQICXxIp3hC/.zB/lyZu/ZrijCD0NcvKS72mAw6dn19q', 1);
+(308, 'ghjkghjkghjk', 'kgjhkghjkgh@example.com', '79442341233', '$2y$10$WVtBTL2a9zZg.d.7uMNjueXA49kng5VfbXqJHoMnWXM0TRBTsbHyO', 1),
+(309, 'dhfghdf', 'dfghdfghdfg@example.com', '79442341233', '$2y$10$ntOY0E9dIF9NFUWEf0XEFetLTYR0HHKQjzDqY7Iu3v18v8kKOwT/C', 1),
+(310, 'fhgjfgh', 'fghjfghjfgh@example.com', '79442341233', '$2y$10$TA0gVL6UtFg7R.qmpDx5ze5VpxpdA54meoeJHXULW/xxEIFVkCxS6', 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -1192,6 +1221,12 @@ ALTER TABLE `colors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `orders`
 --
 ALTER TABLE `orders`
@@ -1204,6 +1239,12 @@ ALTER TABLE `orders`
 ALTER TABLE `order_bikes`
   ADD KEY `bike_id` (`bike_id`),
   ADD KEY `order_id` (`order_id`);
+
+--
+-- Индексы таблицы `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD KEY `personal_access_tokens_ibfk_1` (`tokenable_id`);
 
 --
 -- Индексы таблицы `reviews`
@@ -1260,6 +1301,12 @@ ALTER TABLE `colors`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
+-- AUTO_INCREMENT для таблицы `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
@@ -1275,7 +1322,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'id клиента', AUTO_INCREMENT=261;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'id клиента', AUTO_INCREMENT=311;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -1314,6 +1361,12 @@ ALTER TABLE `orders`
 ALTER TABLE `order_bikes`
   ADD CONSTRAINT `order_bikes_ibfk_1` FOREIGN KEY (`bike_id`) REFERENCES `bikes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `order_bikes_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD CONSTRAINT `personal_access_tokens_ibfk_1` FOREIGN KEY (`tokenable_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `reviews`

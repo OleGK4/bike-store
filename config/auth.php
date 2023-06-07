@@ -18,6 +18,7 @@ return [
         'passwords' => 'users',
     ],
 
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -39,6 +40,11 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => true,
         ],
     ],
 
@@ -109,6 +115,7 @@ return [
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
+
 
     'password_timeout' => 10800,
 
