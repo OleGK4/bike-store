@@ -48,26 +48,17 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('auth_token', ['*'], Carbon::now()->addMinutes(1440));
-            return new JsonResponse(['token' => $token->plainTextToken], 200);
+            return new JsonResponse(['user' => $user, 'token' => $token->plainTextToken], 200);
         }
 
         return new JsonResponse(['error' => 'Invalid credentials'], 401);
     }
 
-    public function authenticate(Request $request)
+    public function logout(): JsonResponse
     {
-        $token = $request->bearerToken();
-        ;
-        if (!$token) {
-            return new JsonResponse(['error' => 'Unauthorized'], 401);
-        }
-        var_dump($token);
-        $user = User::where('id', $token)->first();
-        if (!$user) {
-            return new JsonResponse(['error' => 'Unauthorized'], 401);
-        }
+        auth()->logout();
 
-        return new JsonResponse(['user' => $user]);
+        return response()->json(['message' => 'Successfully logged out']);
     }
 }
 

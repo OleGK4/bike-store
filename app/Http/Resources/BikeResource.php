@@ -17,14 +17,24 @@ class BikeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'brand_id' => $this->brand_id,
-            'category_id' => $this->category_id,
+            'brand' => $this->brand->name,
+            'category' => $this->category->name,
             'model' => $this->model,
-            'color_id' => $this->color_id,
+            'color' => $this->color->name,
             'description' => $this->description,
             'price' => $this->price,
             'image' => $this->image,
         ];
+//        return [
+//            'id' => $this->id,
+//            'brand_id' => $this->brand_id,
+//            'category_id' => $this->category_id,
+//            'model' => $this->model,
+//            'color_id' => $this->color_id,
+//            'description' => $this->description,
+//            'price' => $this->price,
+//            'image' => $this->image,
+//        ];
     }
 
 

@@ -21,10 +21,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'role_id',
         'email',
         'phone',
         'level',
         'password',
+        'remember_token',
     ];
 
     /**
@@ -34,16 +36,19 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'role_id',
+        'remember_token',
+        'id',
     ];
 
-//    /**
-//     * The attributes that should be cast.
-//     *
-//     * @var array<string, string>
-//     */
-//    protected $casts = [
-//        'password' => 'hashed',
-//    ];
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'password' => 'hashed',
+    ];
 
     // HasOne relations
     public function cart(): HasOne

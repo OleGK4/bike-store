@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -17,6 +18,11 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    public function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json(['error' => 'Unauthenticated.'], 401);
+    }
 
     /**
      * Register the exception handling callbacks for the application.

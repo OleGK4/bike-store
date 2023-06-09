@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 07 2023 г., 13:22
+-- Время создания: Июн 09 2023 г., 08:56
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -225,7 +225,10 @@ INSERT INTO `bikes` (`id`, `brand_id`, `category_id`, `model`, `color_id`, `desc
 (180, 182, 184, 'Price, Rolfson and Marvin', 184, 'Aut neque numquam voluptates ut. Aut quisquam ea repellendus ea rem sit ipsam aut.', 3933430, '0'),
 (181, 183, 185, 'Howell-Skiles', 185, 'Est similique cum eos et. Delectus sunt sunt expedita non est. Voluptatem sit nobis neque fugit est consequatur cumque.', 9820681, '0'),
 (182, 184, 186, 'Wintheiser-Wilderman', 186, 'Odit quibusdam aut eos consequuntur nisi et. Qui ut iusto qui consectetur eligendi.', 1967211, '0'),
-(183, 185, 187, 'Breitenberg, Kling and Williamson', 187, 'Quasi qui et sint. Ea eaque sit commodi sapiente ullam. Illo nemo veritatis nesciunt perspiciatis aut dolores id.', 6550092, '0');
+(183, 185, 187, 'Breitenberg, Kling and Williamson', 187, 'Quasi qui et sint. Ea eaque sit commodi sapiente ullam. Illo nemo veritatis nesciunt perspiciatis aut dolores id.', 6550092, '0'),
+(184, 1, 2, 'Mountain Bike', 3, 'A high-performance mountain bike for off-road adventures', 1500, NULL),
+(185, 1, 2, 'Mountain Bike', 3, 'A high-performance mountain bike for off-road adventures', 1500, NULL),
+(186, 1, 2, 'Mountain Bike', 3, 'A high-performance mountain bike for off-road adventures', 1500, NULL);
 
 -- --------------------------------------------------------
 
@@ -863,7 +866,8 @@ INSERT INTO `colors` (`id`, `name`) VALUES
 (184, 'Moccasin'),
 (185, 'Snow'),
 (186, 'Linen'),
-(187, 'DeepSkyBlue');
+(187, 'DeepSkyBlue'),
+(188, 'Pofdsf');
 
 -- --------------------------------------------------------
 
@@ -913,6 +917,7 @@ CREATE TABLE `order_bikes` (
 --
 
 CREATE TABLE `personal_access_tokens` (
+  `id` int NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `token` text COLLATE utf8mb4_general_ci NOT NULL,
   `abilities` text COLLATE utf8mb4_general_ci NOT NULL,
@@ -920,17 +925,20 @@ CREATE TABLE `personal_access_tokens` (
   `tokenable_id` int NOT NULL,
   `tokenable_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `updated_at` timestamp NOT NULL,
-  `created_at` timestamp NOT NULL
+  `created_at` timestamp NOT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `personal_access_tokens`
 --
 
-INSERT INTO `personal_access_tokens` (`name`, `token`, `abilities`, `expires_at`, `tokenable_id`, `tokenable_type`, `updated_at`, `created_at`) VALUES
-('auth_token', '48e6a0e3777f215cd78866d26bca07284af880b5c2e8dc62b48b7f5719fc18db', '[\"*\"]', '2023-06-07 07:06:05', 308, 'App\\Models\\User', '2023-06-07 07:05:05', '2023-06-07 07:05:05'),
-('auth_token', '9a79f3565f5ff219336f798ba803911884a57650051c19bcfe333fc96025bfe3', '[\"*\"]', '2023-06-07 07:06:07', 309, 'App\\Models\\User', '2023-06-07 07:05:07', '2023-06-07 07:05:07'),
-('auth_token', 'd9bda3a9ad8d5ca71abe82d62e442e9a39bb2fb22c06f57dab0e9163e37a1106', '[\"*\"]', '2023-06-07 07:06:10', 310, 'App\\Models\\User', '2023-06-07 07:05:10', '2023-06-07 07:05:10');
+INSERT INTO `personal_access_tokens` (`id`, `name`, `token`, `abilities`, `expires_at`, `tokenable_id`, `tokenable_type`, `updated_at`, `created_at`, `last_used_at`) VALUES
+(28, 'auth_token', '32c61212a450cfd62d6b92bc17068a2e5691077dd228b29b0fe0cb9002bd8217', '[\"*\"]', '2023-06-09 23:21:47', 326, 'App\\Models\\User', '2023-06-09 00:21:25', '2023-06-08 23:21:47', '2023-06-09 00:21:25'),
+(29, 'auth_token', 'cdfbc5f8a5763b3ca8687f11b9e7a85e314e96ab40eb4f34eadfd90f6619934e', '[\"*\"]', '2023-06-10 00:28:54', 326, 'App\\Models\\User', '2023-06-09 00:28:54', '2023-06-09 00:28:54', NULL),
+(30, 'auth_token', '121461116bd054ed7e2c2e7d33dd240c5e0fae9904408c6f7ac98eb1a3caa57b', '[\"*\"]', '2023-06-10 00:29:35', 326, 'App\\Models\\User', '2023-06-09 02:46:37', '2023-06-09 00:29:35', '2023-06-09 02:46:37'),
+(31, 'auth_token', '589c07f9d88a1c1926b7d9549315d7a6c27630d45ef0f4643095cbb02a8edc87', '[\"*\"]', '2023-06-10 00:31:14', 325, 'App\\Models\\User', '2023-06-09 00:31:52', '2023-06-09 00:31:14', '2023-06-09 00:31:52'),
+(32, 'auth_token', '22e8c3ae49cfb3eb4850da3db396536519caae3eb6eed7d24acddf9a158ec50e', '[\"*\"]', '2023-06-10 00:56:39', 325, 'App\\Models\\User', '2023-06-09 01:59:30', '2023-06-09 00:56:39', '2023-06-09 01:59:30');
 
 -- --------------------------------------------------------
 
@@ -953,147 +961,26 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `bike_id`, `user_id`, `text`, `rating`, `created_at`, `updated_at`) VALUES
-(1, 34, 211, 'Velit atque alias et dolor nam expedita. Ut dolorum doloribus ut blanditiis tenetur dolore perferendis sint. Enim eveniet aut et est a et. Asperiores rerum rerum voluptatem sed omnis consequatur quo.', 4, '2023-06-06', '2023-06-06'),
-(2, 35, 211, 'Recusandae sit minus laudantium eligendi occaecati odit beatae aut. Ullam autem quia laboriosam aperiam in rerum et. Neque error aperiam sed vel ut id beatae.', 2, '2023-06-06', '2023-06-06'),
-(3, 36, 211, 'Quo enim et accusamus ad. Facilis aspernatur dolores accusamus ad ut et iste dolorem. Dolorum et molestiae eos nam asperiores modi maiores nam.', 5, '2023-06-06', '2023-06-06'),
-(4, 37, 212, 'Est dolores asperiores natus numquam. Numquam consequatur odit voluptas totam. Est itaque vitae necessitatibus ut nesciunt est magnam. Id a laborum iure ut.', 6, '2023-06-06', '2023-06-06'),
-(5, 38, 212, 'Dolores veritatis illo quia. Unde facere tempore ducimus et suscipit nihil. Quo reiciendis neque omnis eum.', 10, '2023-06-06', '2023-06-06'),
-(6, 39, 212, 'Labore facilis quas impedit quis quis aliquid possimus. Debitis magnam quas et magni. Commodi culpa autem labore quisquam dolorum maiores harum.', 1, '2023-06-06', '2023-06-06'),
-(7, 40, 213, 'Autem et corporis eaque tempora sint deserunt eos. Blanditiis culpa dicta iusto inventore ea. Libero fugit aut et dolorum.', 1, '2023-06-06', '2023-06-06'),
-(8, 41, 213, 'Sunt voluptatem repellat culpa repellat. Est laboriosam quo laboriosam voluptas alias distinctio reiciendis. Dolorem eveniet veritatis delectus provident temporibus. Quod distinctio fuga quasi.', 8, '2023-06-06', '2023-06-06'),
-(9, 42, 213, 'Odit totam et voluptate enim dignissimos. Qui beatae nostrum excepturi quaerat at sit. Qui et adipisci recusandae recusandae recusandae beatae sequi. Deleniti eligendi ab cum ea debitis impedit.', 3, '2023-06-06', '2023-06-06'),
-(10, 43, 214, 'Sapiente iste atque id est ratione quia. Ut magnam necessitatibus blanditiis nam non sit. Quia labore molestiae aut voluptates assumenda non error.', 5, '2023-06-06', '2023-06-06'),
-(11, 44, 214, 'Consectetur voluptas voluptas quis in eligendi. Perspiciatis assumenda omnis facilis non adipisci provident quibusdam. Corrupti ut commodi laboriosam exercitationem voluptatum earum autem.', 5, '2023-06-06', '2023-06-06'),
-(12, 45, 214, 'Vero laudantium consequatur est deserunt. Odio tempore non voluptatem doloremque. Nisi quia quidem libero illo tenetur.', 3, '2023-06-06', '2023-06-06'),
-(13, 46, 215, 'Aperiam dolor iusto maiores ducimus nisi adipisci. Voluptate ut voluptatum tempore ipsum amet. Modi alias beatae deserunt harum quo odit similique. Sit nobis non autem suscipit dolores.', 9, '2023-06-06', '2023-06-06'),
-(14, 47, 215, 'Cupiditate voluptatum sed sit officia quis. Vero rerum laboriosam non quae commodi numquam aspernatur. In rerum accusamus labore.', 7, '2023-06-06', '2023-06-06'),
-(15, 48, 215, 'Et veniam aliquid iste molestias at reiciendis. Consequatur voluptatem fuga dolorem rem accusantium. Itaque id deleniti expedita tempora et.', 5, '2023-06-06', '2023-06-06'),
-(16, 49, 216, 'Magnam illum quod modi autem nostrum delectus. Eius a dolores consequatur aperiam sit hic. Veniam est corrupti quia repellendus aliquam. Reprehenderit eum eius qui nisi.', 3, '2023-06-06', '2023-06-06'),
-(17, 50, 216, 'Praesentium quaerat voluptatem dolor. Eaque fuga sunt excepturi ea qui nulla. Id quis ut voluptatibus vel quam amet.', 5, '2023-06-06', '2023-06-06'),
-(18, 51, 216, 'Atque impedit deleniti excepturi vitae harum aut. Eaque aut voluptates sunt quisquam. Illum ipsam similique non nihil animi non. Dolorum sit facere temporibus et.', 7, '2023-06-06', '2023-06-06'),
-(19, 52, 217, 'Provident laborum voluptatem error qui repudiandae consectetur est. Voluptas modi aut ut. Accusamus autem amet enim qui nihil illum.', 1, '2023-06-06', '2023-06-06'),
-(20, 53, 217, 'Consectetur nihil quia hic. Aut illum quasi nobis reiciendis officiis. Et sed aut et quae. Voluptas cupiditate quidem unde qui.', 5, '2023-06-06', '2023-06-06'),
-(21, 54, 217, 'Quisquam enim enim adipisci est illum. Minus ipsum officiis saepe asperiores laboriosam. Quos libero cupiditate laboriosam vitae. Sunt ipsam similique pariatur voluptas.', 4, '2023-06-06', '2023-06-06'),
-(22, 55, 218, 'Ipsum rerum repellendus consectetur provident. Quos natus quia aliquid et vitae.', 2, '2023-06-06', '2023-06-06'),
-(23, 56, 218, 'Debitis quia odio reprehenderit porro excepturi debitis molestias. Quo vero consequatur ea. Autem et ratione quia et laborum consequatur qui. Numquam quod praesentium rerum voluptas.', 3, '2023-06-06', '2023-06-06'),
-(24, 57, 218, 'Nihil porro possimus molestiae. Quis sit est repellendus veniam incidunt. Sunt vel et velit aperiam rem et occaecati deserunt. Quia et fuga sunt ut amet velit.', 6, '2023-06-06', '2023-06-06'),
-(25, 58, 219, 'Vel nam a dolore dolor. Aperiam sit perspiciatis occaecati velit suscipit eos.', 9, '2023-06-06', '2023-06-06'),
-(26, 59, 219, 'Qui non et est tempore. Reiciendis nihil illo facilis ad nesciunt. Alias est qui hic delectus enim. Magni dolorum in ut ab quia tempora quibusdam veniam.', 3, '2023-06-06', '2023-06-06'),
-(27, 60, 219, 'Dolor corporis qui sed aperiam deleniti accusantium sit. Porro officiis iste et. Esse illo debitis earum ut nihil quo. Minima consequatur eos sunt ullam distinctio tempore.', 9, '2023-06-06', '2023-06-06'),
-(28, 61, 220, 'Architecto est expedita explicabo sit est et nobis dolorum. Vitae sit fugiat facilis quod reprehenderit. Quo aut rem nisi fuga non animi.', 6, '2023-06-06', '2023-06-06'),
-(29, 62, 220, 'Quis distinctio molestiae earum est. Cupiditate hic qui rerum blanditiis est. Velit dolor numquam iure maiores sed porro non.', 4, '2023-06-06', '2023-06-06'),
-(30, 63, 220, 'Expedita voluptate et sit inventore sunt quam. Ea odit iure sapiente saepe.', 8, '2023-06-06', '2023-06-06'),
-(31, 64, 221, 'Minima consequatur optio qui molestiae. Optio repellendus perferendis sit. Eum sunt et architecto eum officiis et incidunt. Itaque sit quis delectus sequi pariatur suscipit est ut.', 4, '2023-06-06', '2023-06-06'),
-(32, 65, 221, 'Voluptatum mollitia nihil natus perspiciatis hic. Veniam aliquam eos aperiam numquam harum et. Tenetur enim sit enim reiciendis quod mollitia accusamus.', 5, '2023-06-06', '2023-06-06'),
-(33, 66, 221, 'Debitis eum voluptatem quis quia quasi harum dolor. Laudantium repudiandae suscipit ex. Quo praesentium tempora earum nemo rerum. Rem eveniet eius ut occaecati eligendi dicta vel.', 6, '2023-06-06', '2023-06-06'),
-(34, 67, 222, 'Quia dolores qui atque atque. Est ipsam et sunt qui aperiam est. Nemo unde corporis sunt quis repudiandae quod.', 3, '2023-06-06', '2023-06-06'),
-(35, 68, 222, 'Ullam voluptatum rerum impedit nemo. Non omnis numquam impedit magnam aliquam id. Vitae quia labore consequatur. Alias enim minus minus illo unde odio.', 9, '2023-06-06', '2023-06-06'),
-(36, 69, 222, 'Dicta laboriosam architecto sit mollitia voluptatibus. Et laborum voluptatem quam quasi. Quia animi magnam perferendis aut eum sequi. At consequuntur consectetur sit et aut nisi.', 4, '2023-06-06', '2023-06-06'),
-(37, 70, 223, 'Officiis sit culpa quia nobis. Illum id corrupti dolorem assumenda doloremque placeat. Error eum eligendi asperiores corrupti omnis est.', 5, '2023-06-06', '2023-06-06'),
-(38, 71, 223, 'Possimus qui totam consectetur velit debitis voluptas. Quae et vero ullam eos temporibus unde. Voluptatum quaerat maiores harum harum voluptatem impedit. Et sed quo voluptates sint molestias.', 6, '2023-06-06', '2023-06-06'),
-(39, 72, 223, 'Molestias similique perferendis dolor qui. Reprehenderit dolorum odit ut incidunt itaque. Vel ipsum consequuntur atque et architecto. In asperiores commodi deleniti sapiente.', 5, '2023-06-06', '2023-06-06'),
-(40, 73, 224, 'Ab non quae quibusdam est tempore. Beatae asperiores assumenda dolorum rerum occaecati non. Omnis optio ullam occaecati fugit dolores illum et. Ut quae modi earum reprehenderit autem similique velit.', 10, '2023-06-06', '2023-06-06'),
-(41, 74, 224, 'Dolorem voluptatibus quia error consequatur harum alias aut. Magni voluptates ipsa laborum. Similique sapiente voluptate quia sit. Tempora ut ex cum.', 7, '2023-06-06', '2023-06-06'),
-(42, 75, 224, 'Iste alias qui minima qui culpa. Corporis quo dignissimos ducimus aut tempora natus quibusdam. Quo itaque distinctio aut sunt possimus et. Reprehenderit voluptatem maxime maxime quidem minima.', 1, '2023-06-06', '2023-06-06'),
-(43, 76, 225, 'Laboriosam provident ex eaque quis ipsa modi neque. Aperiam eum repudiandae in necessitatibus a necessitatibus rerum. Commodi quidem rem a dicta qui.', 1, '2023-06-06', '2023-06-06'),
-(44, 77, 225, 'Consequatur nisi excepturi omnis. Incidunt officia debitis voluptatum id. Recusandae tenetur expedita mollitia asperiores.', 10, '2023-06-06', '2023-06-06'),
-(45, 78, 225, 'Accusamus tempora totam eius. Eligendi et amet perferendis sed. Quia magni est molestias tenetur eaque earum aliquid facilis. Fuga quibusdam aut ullam dicta rem hic.', 7, '2023-06-06', '2023-06-06'),
-(46, 79, 226, 'Minus sint officia mollitia ea necessitatibus sit ut rem. Est autem modi animi temporibus et ea nisi.', 4, '2023-06-06', '2023-06-06'),
-(47, 80, 226, 'Perspiciatis cupiditate exercitationem ab ea vel pariatur. Sunt at aliquam repellendus laudantium rerum culpa nam. Maiores sequi eaque rem ipsam quos qui. Et veritatis neque consequatur voluptate.', 8, '2023-06-06', '2023-06-06'),
-(48, 81, 226, 'Aspernatur eligendi harum quam voluptas consectetur magnam temporibus. Ipsa sed quas perferendis dolorem id iste aut. Dicta dolorem quo quibusdam corrupti.', 9, '2023-06-06', '2023-06-06'),
-(49, 82, 227, 'Ducimus eaque modi est incidunt qui. Doloremque deserunt sit sit corporis. Cumque enim occaecati in ea quibusdam.', 6, '2023-06-06', '2023-06-06'),
-(50, 83, 227, 'Odit sit est dolor voluptas est ratione. Eos non enim itaque dolorum perferendis rerum molestiae. Quae illum sed neque tenetur voluptates rerum occaecati.', 4, '2023-06-06', '2023-06-06'),
-(51, 84, 227, 'Esse atque est quibusdam non. Sed tempore rerum laudantium eum qui. Odit praesentium porro porro qui inventore quod.', 1, '2023-06-06', '2023-06-06'),
-(52, 85, 228, 'Corrupti corrupti ut et aut neque. Aut ratione iure voluptates aut est rem. Explicabo consequatur sit et error esse sed.', 1, '2023-06-06', '2023-06-06'),
-(53, 86, 228, 'Nam pariatur provident veritatis. Doloribus dicta explicabo neque quia ut voluptatem aut. Et in id officiis corporis suscipit quibusdam sed velit. Voluptatem omnis voluptas quia nisi qui.', 9, '2023-06-06', '2023-06-06'),
-(54, 87, 228, 'Est eum nihil aut nemo suscipit quisquam. Cumque porro alias qui quia. Saepe sequi hic eos omnis officia consequuntur non. Nam recusandae omnis animi asperiores.', 1, '2023-06-06', '2023-06-06'),
-(55, 88, 229, 'Pariatur eveniet in at blanditiis eum et. Natus mollitia sed veniam et vitae. Odio at iste quaerat. Dolores saepe itaque officiis doloremque suscipit molestiae.', 7, '2023-06-06', '2023-06-06'),
-(56, 89, 229, 'Quia repellat aut similique consequatur odio. Ipsa voluptas deleniti vero harum est qui cum. Est modi exercitationem dignissimos. Maxime nihil eligendi illum.', 2, '2023-06-06', '2023-06-06'),
-(57, 90, 229, 'Reprehenderit qui repellendus laborum. Aliquid et facilis aliquid ut veniam dolorem molestias. Possimus iusto et quaerat inventore dolor non et.', 5, '2023-06-06', '2023-06-06'),
-(58, 91, 230, 'Quas ad voluptas rerum quod quisquam illo est. Tempora maiores dolor exercitationem perferendis. Ut autem hic deserunt sint. Neque odio excepturi aut.', 6, '2023-06-06', '2023-06-06'),
-(59, 92, 230, 'Hic quibusdam animi explicabo vero. Quia iste qui et. Et unde iste inventore dolorem eos quia.', 10, '2023-06-06', '2023-06-06'),
-(60, 93, 230, 'Nostrum excepturi eum omnis qui nihil quis. Consequuntur tempore omnis autem quas impedit inventore. Dolore necessitatibus quia deserunt et. Ut vitae aperiam ut saepe placeat maiores ipsum.', 3, '2023-06-06', '2023-06-06'),
-(61, 94, 231, 'Qui magnam tempore a. Rerum ut pariatur veniam illo necessitatibus modi et. Recusandae a repellendus unde inventore est vel. Sint repellendus enim debitis odio quas.', 6, '2023-06-06', '2023-06-06'),
-(62, 95, 231, 'Quam perspiciatis et sed qui et. Omnis delectus ipsam ea vero reiciendis et. Similique cupiditate accusantium quos minus eveniet quidem.', 6, '2023-06-06', '2023-06-06'),
-(63, 96, 231, 'Ipsum eveniet corporis ratione sapiente nam et vel. Autem accusamus velit sed sapiente. Tenetur sunt aut consequuntur sit similique velit doloribus.', 8, '2023-06-06', '2023-06-06'),
-(64, 97, 232, 'Rerum eligendi deserunt repudiandae est repudiandae officia autem. Perferendis aut ducimus quidem eaque. Esse sint incidunt enim placeat eum ut. Sed dicta dolor saepe non.', 1, '2023-06-06', '2023-06-06'),
-(65, 98, 232, 'Vitae voluptatem odio ut deleniti est incidunt voluptatibus. Et quisquam sed veritatis et. Ratione non eum modi beatae sed ducimus. Nihil magnam qui ratione earum ut. Molestiae labore iste sed dolor.', 1, '2023-06-06', '2023-06-06'),
-(66, 99, 232, 'Tempore consequatur earum recusandae officiis molestiae ad magni iusto. Est molestiae blanditiis possimus at dolore cumque aut. Nulla enim quaerat ut et molestiae molestias expedita nulla.', 10, '2023-06-06', '2023-06-06'),
-(67, 100, 233, 'Quas dicta nisi esse quo id. Et veritatis magni amet et. Et error atque officiis expedita quisquam sed. Sint explicabo nemo hic accusamus culpa sit delectus.', 9, '2023-06-06', '2023-06-06'),
-(68, 101, 233, 'Voluptatibus doloremque expedita et iste inventore. Corporis aut nostrum qui nulla eum et.', 6, '2023-06-06', '2023-06-06'),
-(69, 102, 233, 'Dignissimos accusamus sunt hic quod. Sed ipsa enim consequuntur fuga earum officia voluptate. Consequuntur et iure hic expedita saepe qui.', 4, '2023-06-06', '2023-06-06'),
-(70, 103, 234, 'Consectetur recusandae ipsa blanditiis aut et. Aut consectetur doloremque velit voluptatum ad. Esse nam mollitia omnis ea quos. Magnam sunt incidunt enim perferendis nihil dolore dignissimos.', 10, '2023-06-06', '2023-06-06'),
-(71, 104, 234, 'Et quia consequatur fugiat reprehenderit. Repudiandae molestiae et dolorem et atque velit quisquam. Voluptate animi voluptas eveniet laborum et unde esse cum.', 3, '2023-06-06', '2023-06-06'),
-(72, 105, 234, 'Porro illo soluta ut eius. Est impedit veniam fugiat reiciendis tempore. Laborum enim in molestias voluptas reprehenderit. Sed est repellat ad aut at et ea.', 2, '2023-06-06', '2023-06-06'),
-(73, 106, 235, 'Sequi repellat voluptatem voluptas enim ipsum. Magni ipsam omnis hic tempora. Eum laudantium id harum qui facilis reiciendis.', 5, '2023-06-06', '2023-06-06'),
-(74, 107, 235, 'Fuga perspiciatis nemo facilis provident alias fugit quam. Autem qui provident voluptatem sint dignissimos. Quisquam sapiente dolor accusantium sed. Odio maiores quis earum est.', 1, '2023-06-06', '2023-06-06'),
-(75, 108, 235, 'Amet nobis sed aliquam quod quod et eveniet molestias. Nobis voluptatum dolor perferendis adipisci. Quia qui velit sed illum ex.', 1, '2023-06-06', '2023-06-06'),
-(76, 109, 236, 'Aliquam et autem cumque consectetur fugit cupiditate quam. Vitae id quam et quibusdam. Rerum repudiandae doloribus nobis quos laboriosam et aut.', 9, '2023-06-06', '2023-06-06'),
-(77, 110, 236, 'Odit maiores odit totam error. Odit nisi culpa debitis quam doloribus commodi atque mollitia. Quas aliquid qui nulla recusandae similique. Illum suscipit aliquid assumenda nesciunt.', 4, '2023-06-06', '2023-06-06'),
-(78, 111, 236, 'Eos maxime quas commodi. Esse ex dolor consectetur. Rerum est quos et eaque.', 3, '2023-06-06', '2023-06-06'),
-(79, 112, 237, 'Tenetur excepturi aut enim sunt voluptatum numquam. Enim quia error dicta in quis voluptatem quae. Consequuntur omnis dolor deleniti nisi.', 10, '2023-06-06', '2023-06-06'),
-(80, 113, 237, 'Qui officia et quisquam. Ipsam amet et dignissimos harum veritatis. Magnam non fugiat consequatur in. Est tempora quos in iusto itaque. Aut culpa sunt aut dolores enim dolorem.', 10, '2023-06-06', '2023-06-06'),
-(81, 114, 237, 'Voluptatibus provident ea consequatur aut qui voluptatibus qui. Nostrum assumenda quo voluptatem itaque.', 4, '2023-06-06', '2023-06-06'),
-(82, 115, 238, 'Suscipit tempore sit accusamus quibusdam perferendis ipsa. Porro architecto cum minima tempora doloribus. Rerum voluptas porro cupiditate velit maiores.', 7, '2023-06-06', '2023-06-06'),
-(83, 116, 238, 'Et quis unde aliquam quis odio veritatis et. Nihil et error adipisci non at laudantium maiores.', 3, '2023-06-06', '2023-06-06'),
-(84, 117, 238, 'Nulla quis quia adipisci. Eum et pariatur nostrum aut reiciendis aliquam earum. Dolorum amet porro ut repudiandae enim assumenda.', 4, '2023-06-06', '2023-06-06'),
-(85, 118, 239, 'Nulla voluptatem iste natus assumenda vitae vitae sed cum. Sapiente odio tenetur delectus voluptatem nihil expedita odio. Quasi magni omnis repudiandae facere.', 5, '2023-06-06', '2023-06-06'),
-(86, 119, 239, 'Consequatur qui sint voluptas est qui dolorum. Quia officia a ut. Occaecati consectetur impedit veniam sunt.', 10, '2023-06-06', '2023-06-06'),
-(87, 120, 239, 'Odit dolores aut deserunt magni fugiat non sit dolores. Impedit veniam molestiae nesciunt eaque. Eaque sed veritatis et et magni suscipit quisquam.', 4, '2023-06-06', '2023-06-06'),
-(88, 121, 240, 'Qui voluptas et et quo et facere placeat aspernatur. Quas impedit qui hic sed. Ut reiciendis et tempora eum.', 9, '2023-06-06', '2023-06-06'),
-(89, 122, 240, 'Asperiores dignissimos qui a aut. Dolorum dolor asperiores quasi nihil minima deserunt. Aliquam laboriosam earum est architecto doloribus. Velit iste corporis est quos consequatur distinctio.', 4, '2023-06-06', '2023-06-06'),
-(90, 123, 240, 'Fugiat voluptatem nesciunt quo provident magni. Voluptatem harum facilis blanditiis et. Tempore et dolores nisi harum voluptatem. Iste esse iure aut.', 8, '2023-06-06', '2023-06-06'),
-(91, 124, 241, 'Maiores eveniet consequatur quis repellendus adipisci asperiores et reiciendis. Fuga minima natus tenetur molestiae cupiditate possimus praesentium. Qui eius eius repellendus et.', 9, '2023-06-06', '2023-06-06'),
-(92, 125, 241, 'Ipsum commodi nihil molestiae sed est debitis. Rem quo omnis perferendis. Molestiae atque quia id voluptas. Doloremque alias ut voluptas ut.', 10, '2023-06-06', '2023-06-06'),
-(93, 126, 241, 'Architecto totam nisi et. Optio esse nihil placeat modi et tenetur mollitia. Sit aut necessitatibus nemo magni dolore autem. Voluptatem beatae assumenda dolorum occaecati.', 9, '2023-06-06', '2023-06-06'),
-(94, 127, 242, 'Sed doloribus unde et consequatur non est. Fuga alias placeat dolorem. Dolorem fugit ipsa deserunt magni qui.', 9, '2023-06-06', '2023-06-06'),
-(95, 128, 242, 'Officiis veniam ea consectetur sit eaque aut. Ipsum iusto nihil expedita molestias. Quia rerum repudiandae non quos est.', 5, '2023-06-06', '2023-06-06'),
-(96, 129, 242, 'Dolore consequatur qui vel iusto minus ex similique mollitia. Tempore qui totam nihil quia.', 6, '2023-06-06', '2023-06-06'),
-(97, 130, 243, 'Qui similique enim corrupti nihil similique nisi. Quaerat ipsam repellat tenetur. Veniam odio eos consequuntur. Quis omnis et commodi.', 8, '2023-06-06', '2023-06-06'),
-(98, 131, 243, 'Voluptates ut cupiditate voluptatum. Sit adipisci voluptatibus excepturi perspiciatis similique at porro. Aut autem voluptas et veritatis fuga est.', 4, '2023-06-06', '2023-06-06'),
-(99, 132, 243, 'Repellendus necessitatibus minus illo ut in. Corporis quae quibusdam rerum id non culpa. Nisi enim porro dolores quod.', 9, '2023-06-06', '2023-06-06'),
-(100, 133, 244, 'Quidem harum et a quia voluptatem cumque quia. Fuga autem est excepturi sunt voluptatem. Doloribus voluptas voluptatem dolor tempora. Et quam rem libero quibusdam numquam doloribus corrupti suscipit.', 10, '2023-06-06', '2023-06-06'),
-(101, 134, 244, 'Possimus aliquam voluptatem illo et fuga praesentium iste. Et veritatis dolore facere reiciendis sit unde eum dolores. Qui molestiae enim sed. In explicabo quis quis quisquam tempore ut.', 9, '2023-06-06', '2023-06-06'),
-(102, 135, 244, 'Aut omnis aut voluptatem. Voluptatum cumque odit ut dolorem culpa. Sed harum enim atque omnis est eos ut. Doloribus cupiditate sint repudiandae fuga.', 2, '2023-06-06', '2023-06-06'),
-(103, 136, 245, 'Laudantium cumque a nesciunt enim quisquam sed maiores. Omnis non dicta quia soluta voluptas. Perferendis autem eos in aspernatur accusantium minus vero est. Eos ut natus velit nisi modi.', 1, '2023-06-06', '2023-06-06'),
-(104, 137, 245, 'Sit nesciunt quas porro voluptatem et officia. Nulla optio quia id dolore commodi quo. Laborum tempore aut id corporis.', 9, '2023-06-06', '2023-06-06'),
-(105, 138, 245, 'Non voluptate incidunt libero autem hic autem illum sed. Aliquam nostrum voluptate ipsum consectetur ut.', 2, '2023-06-06', '2023-06-06'),
-(106, 139, 246, 'Fugit quis assumenda eaque est numquam. Repellendus magnam repellendus laborum ut doloribus nisi labore. Aliquam et et sed praesentium perspiciatis.', 1, '2023-06-06', '2023-06-06'),
-(107, 140, 246, 'A nihil repellat velit voluptatem ad nihil est. Illo ut et recusandae repellendus unde est labore. Aspernatur esse minus voluptatum asperiores vitae cum provident.', 2, '2023-06-06', '2023-06-06'),
-(108, 141, 246, 'Fugit sequi qui non dolorem quia. Ut laudantium modi sit dignissimos dolor a et. Inventore eos harum animi laudantium. A quod praesentium cumque architecto minima sapiente possimus.', 10, '2023-06-06', '2023-06-06'),
-(109, 142, 247, 'Tenetur placeat consequatur quisquam magnam ullam. Animi saepe voluptas sequi vero iusto quo voluptatibus. Sed non hic et magni qui voluptatem est ratione.', 6, '2023-06-06', '2023-06-06'),
-(110, 143, 247, 'Quod dolore fugit maiores quisquam in. Odit excepturi aut ut in sit. Qui sed necessitatibus id aut perferendis qui quis.', 8, '2023-06-06', '2023-06-06'),
-(111, 144, 247, 'Dolore assumenda corporis eos et ratione. Voluptatem maxime sint vel similique corrupti porro est. Perspiciatis reprehenderit officiis porro voluptatem delectus ut.', 3, '2023-06-06', '2023-06-06'),
-(112, 145, 248, 'Explicabo autem iure et in vitae minus. Consequatur est nam labore voluptatem voluptas ipsam doloremque et.', 3, '2023-06-06', '2023-06-06'),
-(113, 146, 248, 'Sit pariatur odio iste dolor nam et. Voluptatem ut fugiat consequatur consequatur aliquam. Dolorum amet debitis architecto nulla quo pariatur et enim. Velit illo et in velit sit voluptates ipsum.', 8, '2023-06-06', '2023-06-06'),
-(114, 147, 248, 'Commodi consequatur nobis dolor amet harum dolores illo. Expedita accusamus qui modi et. Totam quibusdam dolore qui omnis aut voluptas delectus voluptas. Laboriosam vel reiciendis quo a illum.', 4, '2023-06-06', '2023-06-06'),
-(115, 148, 249, 'Magni quidem molestiae sed id sequi id. Quo minima cupiditate non eum fugiat. Modi ea ducimus ipsa quaerat dolorem consequatur. Recusandae quia repellat ducimus adipisci culpa deserunt.', 5, '2023-06-06', '2023-06-06'),
-(116, 149, 249, 'Nostrum accusantium itaque odit autem provident atque quia. Doloremque laudantium fugit eligendi sint mollitia voluptatem. Molestias voluptas nesciunt optio molestiae voluptates.', 8, '2023-06-06', '2023-06-06'),
-(117, 150, 249, 'Laboriosam culpa eum vero adipisci sequi facilis rem. Ut nam voluptates tempore sit consequuntur quibusdam. Doloribus est vitae exercitationem minus et laudantium.', 8, '2023-06-06', '2023-06-06'),
-(118, 151, 250, 'Incidunt cupiditate vero velit qui fugit aliquid. Tempore autem iusto rem quo. Sit quam maxime eligendi saepe.', 3, '2023-06-06', '2023-06-06'),
-(119, 152, 250, 'Accusamus quidem cumque occaecati eum ad. Odit nemo et similique omnis commodi voluptatem laboriosam. Libero ipsum in consequatur ipsa. Voluptas dolor dignissimos ab odio.', 6, '2023-06-06', '2023-06-06'),
-(120, 153, 250, 'Sint voluptatem doloremque veritatis id. Et incidunt libero perspiciatis delectus. Voluptatem eaque qui quae quo. Sint est sapiente quis. Quam nihil aliquam quo voluptas earum qui enim eum.', 10, '2023-06-06', '2023-06-06'),
-(121, 154, 251, 'Soluta sint quia est cumque numquam quia dolorem. Nesciunt qui magni blanditiis aliquid omnis inventore. Est repellat vel temporibus consectetur totam odio.', 6, '2023-06-06', '2023-06-06'),
-(122, 155, 251, 'Tenetur veritatis et et. Et numquam consequatur officiis et. Ut ex hic voluptas nihil.', 10, '2023-06-06', '2023-06-06'),
-(123, 156, 251, 'Et fugiat ducimus sapiente sint ipsa voluptatibus hic. Animi molestias optio qui autem quia. Ducimus sit quibusdam nihil accusantium ut eaque eum.', 5, '2023-06-06', '2023-06-06'),
-(124, 157, 252, 'Minima consequatur earum consequatur. Sunt molestiae ea debitis beatae placeat ut laborum. Nulla quam qui dolorem dolore aut doloribus eum.', 9, '2023-06-06', '2023-06-06'),
-(125, 158, 252, 'Perferendis explicabo pariatur optio. Voluptatum ut perferendis et dolores nesciunt. Fuga temporibus autem labore quia maxime voluptatum et.', 1, '2023-06-06', '2023-06-06'),
-(126, 159, 252, 'Vero omnis quam at voluptas fuga nihil. Qui et architecto neque voluptate eos officiis eum voluptas.', 3, '2023-06-06', '2023-06-06'),
-(127, 160, 253, 'Sit quam officia recusandae quos sed inventore quos. Qui earum nihil laborum consectetur saepe. Nemo odio aut ipsum vero dicta qui. Vel et qui corrupti ex optio dolores necessitatibus sed.', 1, '2023-06-06', '2023-06-06'),
-(128, 161, 253, 'Ut dolores quis et. Maiores tempore quasi deserunt dolores sed expedita tempora in. Ratione reprehenderit et in sed voluptates. Labore aut tempore nihil odio rerum.', 10, '2023-06-06', '2023-06-06'),
-(129, 162, 253, 'Eos voluptas libero recusandae recusandae amet et. Tenetur doloribus dolor aut adipisci.', 1, '2023-06-06', '2023-06-06'),
-(130, 163, 254, 'Maxime quod minima quas vel distinctio rerum quae rerum. Debitis officiis mollitia rerum et ipsum veritatis modi.', 5, '2023-06-06', '2023-06-06'),
-(131, 164, 254, 'Quam id laudantium asperiores laborum non. Perspiciatis quia neque ut iste dolore.', 6, '2023-06-06', '2023-06-06'),
-(132, 165, 254, 'Deserunt quia corrupti quis voluptatem. Tempora omnis mollitia impedit debitis praesentium aut iste. Optio rerum cum voluptatum libero aut. Illo qui voluptatem sunt provident.', 2, '2023-06-06', '2023-06-06'),
-(133, 166, 255, 'Velit eos neque ratione et magnam et inventore. Quaerat suscipit omnis nesciunt magni reprehenderit quibusdam culpa. Beatae placeat recusandae est culpa.', 9, '2023-06-06', '2023-06-06'),
-(134, 167, 255, 'Ducimus et commodi harum expedita ut quo occaecati. Maxime eos molestias molestiae qui. Quisquam et reprehenderit aut et. Quia sequi consequuntur eligendi aut voluptas.', 5, '2023-06-06', '2023-06-06'),
-(135, 168, 255, 'Voluptate eos et rerum aut. Animi aperiam accusamus iusto magnam sed amet placeat. Dicta provident doloremque est tempora necessitatibus sint quos. Eveniet non consequatur sint nobis doloremque.', 6, '2023-06-06', '2023-06-06'),
-(136, 169, 256, 'Vero voluptatum quo hic corporis illo et tempore. Eius dolorum numquam perspiciatis quidem non autem. Vel omnis ipsam architecto sapiente.', 9, '2023-06-06', '2023-06-06'),
-(137, 170, 256, 'Aut natus nihil nulla deserunt. Optio omnis error dicta in. Eius quis cupiditate et maiores enim est aperiam.', 6, '2023-06-06', '2023-06-06'),
-(138, 171, 256, 'Et labore earum aliquam accusamus. Reprehenderit veritatis voluptas fuga soluta aut sed. At fuga ad explicabo non distinctio.', 10, '2023-06-06', '2023-06-06'),
-(139, 172, 257, 'Delectus quidem amet facere velit dolor itaque repellendus. Facere et unde suscipit consequatur minima est. Blanditiis occaecati amet hic.', 2, '2023-06-06', '2023-06-06'),
-(140, 173, 257, 'Est mollitia at perferendis ut. Quis enim magni dignissimos non officia sed et. Molestiae eos vel tempora provident et nulla sed.', 1, '2023-06-06', '2023-06-06'),
-(141, 174, 257, 'Tenetur vel animi porro nobis excepturi praesentium. Nisi aut qui laboriosam qui.', 5, '2023-06-06', '2023-06-06');
+(1, 186, 326, 'This bike is amazing!', 5, '2023-06-09', '2023-06-09');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`) VALUES
+(1, 'User'),
+(2, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -1103,76 +990,75 @@ INSERT INTO `reviews` (`id`, `bike_id`, `user_id`, `text`, `rating`, `created_at
 
 CREATE TABLE `users` (
   `id` int NOT NULL COMMENT 'id клиента',
+  `role_id` int NOT NULL DEFAULT '1' COMMENT 'role_id = 1 => user',
   `name` varchar(200) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'имя клиента',
   `email` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'почта клиента',
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'телефон клиента',
   `password` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'пароль',
-  `level` int NOT NULL DEFAULT '1' COMMENT 'уровень допуска'
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `level`) VALUES
-(203, 'Pamela Cassin II', 'gleichner.tamia@example.com', '79536163209', '$2y$10$U59ioQG0A1TDkalre2Fi4euVpp/WrJ9JozLwSEVf3NSO4.pQGX5PS', 1),
-(204, 'Cortney Kemmer', 'hoeger.emelie@example.org', '79539867450', '$2y$10$zMcQ/iufPHQ8EdKmzgIqNOrqd/P3sQBSCCCZ9tYO67qtwaEkZQouq', 1),
-(205, 'Myriam Luettgen', 'fstoltenberg@example.net', '79533677050', '$2y$10$RinZnzNcRLSz64oodPNp7eAvcFOJvhOico6izEtSaDqEpwa8ye1q.', 1),
-(206, 'Lisa Daugherty', 'fraynor@example.com', '79539728024', '$2y$10$2pW/TZh2Dy7JAHO3Wp.O8e6tiGRB3cQl0uVSP9HM/gZMUS9B69lrO', 1),
-(207, 'Norene Schuster', 'hartmann.allie@example.com', '79532454676', '$2y$10$x65./mHLXIkmnBYsnI.eG.C/1ZaA7wEB0PogNw9qEa3FyWIQE9cMe', 1),
-(208, 'Lisa O\'Hara', 'bayer.ofelia@example.net', '79531982432', '$2y$10$4QH40pkIufyDJrRLjhOmdez.URjhR9I.7IGuYCVcKelGA53TWZvb6', 1),
-(209, 'Dr. Jaqueline Blick', 'ali62@example.com', '79539881426', '$2y$10$/QhLVucYX5NcUAIOozOvOeta9vtpDPOnSH6kl7sOUO1IKsO.cLPGG', 1),
-(210, 'Ayden Yundt', 'xbrakus@example.com', '79537062548', '$2y$10$lSy8Gu0081Pf9jYarIdw0.kH1jcTzjP63QfCYxgg2/jxSQuqqhwvm', 1),
-(211, 'Edison Halvorson', 'vjones@example.com', '79537882349', '$2y$10$OYnSSL7tpxIq5uZGRI/gQe9iK7YvB16wyGzYK7N.1y84hSJ3TRzEq', 1),
-(212, 'Garnett Green', 'hkiehn@example.com', '79532172645', '$2y$10$9hA9Thr92.kq9AQmbEU.AukArfn41XElsJe2z5KDwjzVhLLLdUx5u', 1),
-(213, 'Ramon Weimann', 'dcollins@example.net', '79538994272', '$2y$10$NB2crYQkrNjbI0fOJz.yZuvUeGwChcXs3tR.ygvi1BUya3RWmgunq', 1),
-(214, 'Garth Nolan', 'harvey.berta@example.org', '79537963008', '$2y$10$/3i7PIV.f/RljgtBxzteYunI25FQ8bi4gjX98Jl2ErxU08Cg.cB7m', 1),
-(215, 'Reymundo Padberg IV', 'alvina70@example.com', '79534725370', '$2y$10$A9RAYIYC/.PL.PFKWsEFhuYs/ynv1kkKcK64aDSBd3w.Pklx5c/Lq', 1),
-(216, 'Cameron Mills', 'elroy.kovacek@example.com', '79535321050', '$2y$10$z0raV/v5jEvK6aVlspZOjenNcNirah37Tj/BN8oEmR2CP2xrIRMlu', 1),
-(217, 'Cheyanne Harris Jr.', 'brempel@example.org', '79535756924', '$2y$10$vYudldF2XfcwX4fChdNKd.aHelw8fcDHi00mUn34AKcBiJCQqGqeC', 1),
-(218, 'Elisabeth Rau', 'ilangworth@example.net', '79530907105', '$2y$10$AiLoNmWWhuwnSqqgc24R8.Uau0MrAL8R4.bXVetraBYvRuUXFNIjW', 1),
-(219, 'Clementine Stehr', 'howe.wilhelm@example.org', '79533450803', '$2y$10$Y3Ta70.2ERDqBD3Mpw3tD.eZZifhOCh2fVSCCYpcekeosmL0HJjwu', 1),
-(220, 'Adrain Yundt Sr.', 'zulauf.damian@example.com', '79533583311', '$2y$10$nVndzPHqKyqhPkaJbJjuWO2mrw/sVnpQjrk4tsyDCSuYNH6hkQiju', 1),
-(221, 'Okey Walker I', 'gregg.adams@example.org', '79536302488', '$2y$10$.QXfNEIQ/fAI6/zZARn3iesriz.TYI5DhfsaVKcfcwQegUsiSdCl2', 1),
-(222, 'Amara Howell', 'demond.gleichner@example.com', '79534536571', '$2y$10$P99oK2Vnz6vm9Ncug.BqLOgc2Rb/zRjZXQ/WnfpligQ.yn439ht.K', 1),
-(223, 'Dr. Miller Kessler', 'christina84@example.org', '79530942570', '$2y$10$UxbB0Iy3vw7.8v5XgzJaE.mb2NHhzNy9ax7zzZ68C.nevCLz8NTtS', 1),
-(224, 'Jaleel Aufderhar IV', 'zboncak.burley@example.com', '79537170958', '$2y$10$F44vPj1m4D0qPyOnAbchOOLfWWLaTjjnsrF/6lLmELGxFmbGnC/p.', 1),
-(225, 'Prof. Devon O\'Hara I', 'mbogisich@example.org', '79530893570', '$2y$10$6EeqEayR4MmeAPyyc.vSr.oWYOuDUl50Xm27z4rY0DsW/IMyHgTr.', 1),
-(226, 'Thad Schneider', 'qankunding@example.org', '79533185139', '$2y$10$4DcakPQBwmCvttxMHz/6nOosnq5x42hbcMqAPXfEI1KsfJrzcxHaK', 1),
-(227, 'Dr. Aglae Kuhic', 'znader@example.com', '79532790705', '$2y$10$ShHhn9u6b0tRlgCugNp.G.JFpHzN9mTl7k2PE9ZxhhCRuCGUEEN/a', 1),
-(228, 'Aditya Stiedemann', 'damore.jolie@example.net', '79533823742', '$2y$10$NfpGgmLvRcyYi0GXMxp2Me9lfJJ1jT/ShnBe7gkBRsCmwDLs1ac9K', 1),
-(229, 'Dennis Turcotte', 'faye34@example.net', '79537447076', '$2y$10$nLAXwK75xeSWLvli34epZeaiyEeeJ0rlqf/.0Yauh1kpU1nlSL.2C', 1),
-(230, 'Rodrick Kub', 'wunsch.marge@example.org', '79533943765', '$2y$10$lvtMJCerToCVtD6KaBDaq.xtByWd8C2hgHnw4MKEKCPcKeleqK4Z2', 1),
-(231, 'Tiara Ward', 'vkoelpin@example.com', '79538996547', '$2y$10$/vndbHhBTTU4kgvbLOxkte2D0qfxkFGI2clHlCUO8T/nbSnftuZVu', 1),
-(232, 'Cordia Stamm', 'pwuckert@example.com', '79536897782', '$2y$10$xu5KqQbeqz5/.qdZMeM4SO/gTC3mdR6VfHL48NX.rX.dQurOHMBC6', 1),
-(233, 'Caden Torphy', 'cathryn92@example.org', '79537000125', '$2y$10$mebtEijKh0RXMo0e0MAOZuo7B01.mdOLVFW5TJMctnU52Icr5UTr2', 1),
-(234, 'Lori Funk', 'armani69@example.org', '79538689009', '$2y$10$142qeA3BmKwv7S5aneP/Mu9NDhBw/Z0iXozrn3UBClmOGuug925U.', 1),
-(235, 'Athena Bailey', 'jcormier@example.net', '79535619033', '$2y$10$lDnNr27FY/FIao4NYZXpie2otwMSN5mQ6CFlHqZ1Gr5RfosoULxU2', 1),
-(236, 'Kacey Murphy', 'ifranecki@example.net', '79535353856', '$2y$10$HaTvdvMvsB7Uk/D.qMMGEeW3AhZ3bNVNJQxd7TcGf8yNOt6PD0feS', 1),
-(237, 'Sarah Stiedemann V', 'adaline.herman@example.net', '79530594666', '$2y$10$m5xUp6LZISEEWf4Hl3zQGufM2r96u4E/5PUilsy3MmSYaZ80mPt9i', 1),
-(238, 'Jordan Veum', 'waelchi.stephania@example.com', '79530168653', '$2y$10$lxIxaTdtlQr3.RAZsKcv/OGlAwwsNS6.44FhCo4r9J0zw/qdt6A16', 1),
-(239, 'Garnet Dicki', 'lucy75@example.net', '79530271547', '$2y$10$mGE3d9Qsn2LteXEPx6WLSupTHe5kGwpg1a8XlXXLbSmzJEoGKhHgq', 1),
-(240, 'Mr. Timmothy Wisoky', 'crystal.gutmann@example.net', '79536331452', '$2y$10$3fdTzp85XvbwDmjISiCXKeUs0P1oBiznWktbK369caHXysNuRhvJ.', 1),
-(241, 'Lacey Walsh V', 'gladyce.vonrueden@example.org', '79537725972', '$2y$10$sHM/EYvpxBIo0uHt9I6jR.W0bSQU3w3Doam/pHN.g6PZT01ZWFvUq', 1),
-(242, 'Omari Lynch', 'toney.padberg@example.org', '79537668731', '$2y$10$S3hOoAAwNO0Uw/oVi9u4bOBGtykxl79LRjLMvVi8Soh8Zi1m6SJFy', 1),
-(243, 'Kristian Kling', 'naomie48@example.org', '79538482759', '$2y$10$bLOUltivYPpfB6dlY7eIj.z1uhoK/.RXUZvobTbxMMFxRRkApHyH.', 1),
-(244, 'Orlando Cassin Sr.', 'rowena.goyette@example.net', '79536048855', '$2y$10$KhSZh62YavK8LCVpgkHLYeYJ4fgYLKgK/ywTlmL16Sif2X5rnPSsu', 1),
-(245, 'Ms. Jaida Kihn V', 'padberg.claud@example.org', '79538424362', '$2y$10$aNJUI9pBJO5vubLuV3kAF.QnGvIY3qFGz30K3EE32La5fZZed1OIm', 1),
-(246, 'Miss Valentina Huel I', 'ulises15@example.com', '79537282802', '$2y$10$tsKomZunFlAXfj7OxDrrlekbyGDhO2BihswqmGF8MxTxVygqBBPGO', 1),
-(247, 'Christelle DuBuque', 'hahn.solon@example.net', '79534711860', '$2y$10$ORnI6wYpjhgj9mtVaf5wreXQQ0vj6oaoXF2hnk7LNU465jRa299g2', 1),
-(248, 'Dr. Milo O\'Kon DDS', 'sarina92@example.net', '79536873847', '$2y$10$UZIpLOOC4PmWyHeGV.EH6uEVqZdMpEh3OtXQ3uFmNVlqcvU39WwNS', 1),
-(249, 'Alanis Heidenreich IV', 'phomenick@example.com', '79532243639', '$2y$10$IHIWJyVP.S3miSzI4r6oP.LBMu9IqCivPVuQ7esm3LOMLC/yszoCu', 1),
-(250, 'Jennifer Lynch', 'zulauf.sonny@example.org', '79535358289', '$2y$10$QUj24/oW7hN/.dqNYkrcZeg1sz2GMuCRT8BLVBtsci7V4la089x.K', 1),
-(251, 'Casimir Nienow', 'christopher64@example.org', '79535030238', '$2y$10$2YF9bkNHSKrV7jh4iza1Y.4dXp9LhfioYKNDf76cY6zkvW5kjBzd.', 1),
-(252, 'Meaghan Senger', 'deshaun46@example.com', '79535882593', '$2y$10$9bIBDVsh/j0jU/QMjIFWIudmsO5TbSWRY7wtn0AJW4F3VbdD3n2M6', 1),
-(253, 'Philip Hagenes', 'harmony.goodwin@example.com', '79530501763', '$2y$10$5VWa8wtHnWy843KPtR1ExuajKZhTLsOhPMQgul29J/ihuEuWLKiXe', 1),
-(254, 'Connie Weissnat IV', 'daisha51@example.org', '79531824034', '$2y$10$5LQjcCm1CGIHOx0PIQGpDOJdNmooqph0NCGM/yzHJT2KBiaKRjo1C', 1),
-(255, 'Mr. Daron Weissnat V', 'georgiana.jacobs@example.net', '79534847976', '$2y$10$Fz5gucIJYlV60TG1k9XL5OXwelzpaTCgwpPlitIpif2Q7oQjAl3fO', 1),
-(256, 'Glenda Fritsch', 'maximillian67@example.net', '79535081130', '$2y$10$Iw3V921YzXSqkEWcsECAi.QgASL5hEkzkleMGqCjibB9NSKqc5ZyG', 1),
-(257, 'Francisca Schinner', 'nelson18@example.net', '79538901297', '$2y$10$i0a8f5UZYRMPC..zdudb2e9wtM2YYVlJGHMVDiC9GKmPTtaJmtV7i', 1),
-(308, 'ghjkghjkghjk', 'kgjhkghjkgh@example.com', '79442341233', '$2y$10$WVtBTL2a9zZg.d.7uMNjueXA49kng5VfbXqJHoMnWXM0TRBTsbHyO', 1),
-(309, 'dhfghdf', 'dfghdfghdfg@example.com', '79442341233', '$2y$10$ntOY0E9dIF9NFUWEf0XEFetLTYR0HHKQjzDqY7Iu3v18v8kKOwT/C', 1),
-(310, 'fhgjfgh', 'fghjfghjfgh@example.com', '79442341233', '$2y$10$TA0gVL6UtFg7R.qmpDx5ze5VpxpdA54meoeJHXULW/xxEIFVkCxS6', 1);
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `phone`, `password`, `remember_token`) VALUES
+(203, 1, 'Pamela Cassin II', 'gleichner.tamia@example.com', '79536163209', '$2y$10$U59ioQG0A1TDkalre2Fi4euVpp/WrJ9JozLwSEVf3NSO4.pQGX5PS', ''),
+(204, 1, 'Cortney Kemmer', 'hoeger.emelie@example.org', '79539867450', '$2y$10$zMcQ/iufPHQ8EdKmzgIqNOrqd/P3sQBSCCCZ9tYO67qtwaEkZQouq', ''),
+(205, 1, 'Myriam Luettgen', 'fstoltenberg@example.net', '79533677050', '$2y$10$RinZnzNcRLSz64oodPNp7eAvcFOJvhOico6izEtSaDqEpwa8ye1q.', ''),
+(206, 1, 'Lisa Daugherty', 'fraynor@example.com', '79539728024', '$2y$10$2pW/TZh2Dy7JAHO3Wp.O8e6tiGRB3cQl0uVSP9HM/gZMUS9B69lrO', ''),
+(207, 1, 'Norene Schuster', 'hartmann.allie@example.com', '79532454676', '$2y$10$x65./mHLXIkmnBYsnI.eG.C/1ZaA7wEB0PogNw9qEa3FyWIQE9cMe', ''),
+(208, 1, 'Lisa O\'Hara', 'bayer.ofelia@example.net', '79531982432', '$2y$10$4QH40pkIufyDJrRLjhOmdez.URjhR9I.7IGuYCVcKelGA53TWZvb6', ''),
+(209, 1, 'Dr. Jaqueline Blick', 'ali62@example.com', '79539881426', '$2y$10$/QhLVucYX5NcUAIOozOvOeta9vtpDPOnSH6kl7sOUO1IKsO.cLPGG', ''),
+(210, 1, 'Ayden Yundt', 'xbrakus@example.com', '79537062548', '$2y$10$lSy8Gu0081Pf9jYarIdw0.kH1jcTzjP63QfCYxgg2/jxSQuqqhwvm', ''),
+(211, 1, 'Edison Halvorson', 'vjones@example.com', '79537882349', '$2y$10$OYnSSL7tpxIq5uZGRI/gQe9iK7YvB16wyGzYK7N.1y84hSJ3TRzEq', ''),
+(212, 1, 'Garnett Green', 'hkiehn@example.com', '79532172645', '$2y$10$9hA9Thr92.kq9AQmbEU.AukArfn41XElsJe2z5KDwjzVhLLLdUx5u', ''),
+(213, 1, 'Ramon Weimann', 'dcollins@example.net', '79538994272', '$2y$10$NB2crYQkrNjbI0fOJz.yZuvUeGwChcXs3tR.ygvi1BUya3RWmgunq', ''),
+(214, 1, 'Garth Nolan', 'harvey.berta@example.org', '79537963008', '$2y$10$/3i7PIV.f/RljgtBxzteYunI25FQ8bi4gjX98Jl2ErxU08Cg.cB7m', ''),
+(215, 1, 'Reymundo Padberg IV', 'alvina70@example.com', '79534725370', '$2y$10$A9RAYIYC/.PL.PFKWsEFhuYs/ynv1kkKcK64aDSBd3w.Pklx5c/Lq', ''),
+(216, 1, 'Cameron Mills', 'elroy.kovacek@example.com', '79535321050', '$2y$10$z0raV/v5jEvK6aVlspZOjenNcNirah37Tj/BN8oEmR2CP2xrIRMlu', ''),
+(217, 1, 'Cheyanne Harris Jr.', 'brempel@example.org', '79535756924', '$2y$10$vYudldF2XfcwX4fChdNKd.aHelw8fcDHi00mUn34AKcBiJCQqGqeC', ''),
+(218, 1, 'Elisabeth Rau', 'ilangworth@example.net', '79530907105', '$2y$10$AiLoNmWWhuwnSqqgc24R8.Uau0MrAL8R4.bXVetraBYvRuUXFNIjW', ''),
+(219, 1, 'Clementine Stehr', 'howe.wilhelm@example.org', '79533450803', '$2y$10$Y3Ta70.2ERDqBD3Mpw3tD.eZZifhOCh2fVSCCYpcekeosmL0HJjwu', ''),
+(220, 1, 'Adrain Yundt Sr.', 'zulauf.damian@example.com', '79533583311', '$2y$10$nVndzPHqKyqhPkaJbJjuWO2mrw/sVnpQjrk4tsyDCSuYNH6hkQiju', ''),
+(221, 1, 'Okey Walker I', 'gregg.adams@example.org', '79536302488', '$2y$10$.QXfNEIQ/fAI6/zZARn3iesriz.TYI5DhfsaVKcfcwQegUsiSdCl2', ''),
+(222, 1, 'Amara Howell', 'demond.gleichner@example.com', '79534536571', '$2y$10$P99oK2Vnz6vm9Ncug.BqLOgc2Rb/zRjZXQ/WnfpligQ.yn439ht.K', ''),
+(223, 1, 'Dr. Miller Kessler', 'christina84@example.org', '79530942570', '$2y$10$UxbB0Iy3vw7.8v5XgzJaE.mb2NHhzNy9ax7zzZ68C.nevCLz8NTtS', ''),
+(224, 1, 'Jaleel Aufderhar IV', 'zboncak.burley@example.com', '79537170958', '$2y$10$F44vPj1m4D0qPyOnAbchOOLfWWLaTjjnsrF/6lLmELGxFmbGnC/p.', ''),
+(225, 1, 'Prof. Devon O\'Hara I', 'mbogisich@example.org', '79530893570', '$2y$10$6EeqEayR4MmeAPyyc.vSr.oWYOuDUl50Xm27z4rY0DsW/IMyHgTr.', ''),
+(226, 1, 'Thad Schneider', 'qankunding@example.org', '79533185139', '$2y$10$4DcakPQBwmCvttxMHz/6nOosnq5x42hbcMqAPXfEI1KsfJrzcxHaK', ''),
+(227, 1, 'Dr. Aglae Kuhic', 'znader@example.com', '79532790705', '$2y$10$ShHhn9u6b0tRlgCugNp.G.JFpHzN9mTl7k2PE9ZxhhCRuCGUEEN/a', ''),
+(228, 1, 'Aditya Stiedemann', 'damore.jolie@example.net', '79533823742', '$2y$10$NfpGgmLvRcyYi0GXMxp2Me9lfJJ1jT/ShnBe7gkBRsCmwDLs1ac9K', ''),
+(229, 1, 'Dennis Turcotte', 'faye34@example.net', '79537447076', '$2y$10$nLAXwK75xeSWLvli34epZeaiyEeeJ0rlqf/.0Yauh1kpU1nlSL.2C', ''),
+(230, 1, 'Rodrick Kub', 'wunsch.marge@example.org', '79533943765', '$2y$10$lvtMJCerToCVtD6KaBDaq.xtByWd8C2hgHnw4MKEKCPcKeleqK4Z2', ''),
+(231, 1, 'Tiara Ward', 'vkoelpin@example.com', '79538996547', '$2y$10$/vndbHhBTTU4kgvbLOxkte2D0qfxkFGI2clHlCUO8T/nbSnftuZVu', ''),
+(232, 1, 'Cordia Stamm', 'pwuckert@example.com', '79536897782', '$2y$10$xu5KqQbeqz5/.qdZMeM4SO/gTC3mdR6VfHL48NX.rX.dQurOHMBC6', ''),
+(233, 1, 'Caden Torphy', 'cathryn92@example.org', '79537000125', '$2y$10$mebtEijKh0RXMo0e0MAOZuo7B01.mdOLVFW5TJMctnU52Icr5UTr2', ''),
+(234, 1, 'Lori Funk', 'armani69@example.org', '79538689009', '$2y$10$142qeA3BmKwv7S5aneP/Mu9NDhBw/Z0iXozrn3UBClmOGuug925U.', ''),
+(235, 1, 'Athena Bailey', 'jcormier@example.net', '79535619033', '$2y$10$lDnNr27FY/FIao4NYZXpie2otwMSN5mQ6CFlHqZ1Gr5RfosoULxU2', ''),
+(236, 1, 'Kacey Murphy', 'ifranecki@example.net', '79535353856', '$2y$10$HaTvdvMvsB7Uk/D.qMMGEeW3AhZ3bNVNJQxd7TcGf8yNOt6PD0feS', ''),
+(237, 1, 'Sarah Stiedemann V', 'adaline.herman@example.net', '79530594666', '$2y$10$m5xUp6LZISEEWf4Hl3zQGufM2r96u4E/5PUilsy3MmSYaZ80mPt9i', ''),
+(238, 1, 'Jordan Veum', 'waelchi.stephania@example.com', '79530168653', '$2y$10$lxIxaTdtlQr3.RAZsKcv/OGlAwwsNS6.44FhCo4r9J0zw/qdt6A16', ''),
+(239, 1, 'Garnet Dicki', 'lucy75@example.net', '79530271547', '$2y$10$mGE3d9Qsn2LteXEPx6WLSupTHe5kGwpg1a8XlXXLbSmzJEoGKhHgq', ''),
+(240, 1, 'Mr. Timmothy Wisoky', 'crystal.gutmann@example.net', '79536331452', '$2y$10$3fdTzp85XvbwDmjISiCXKeUs0P1oBiznWktbK369caHXysNuRhvJ.', ''),
+(241, 1, 'Lacey Walsh V', 'gladyce.vonrueden@example.org', '79537725972', '$2y$10$sHM/EYvpxBIo0uHt9I6jR.W0bSQU3w3Doam/pHN.g6PZT01ZWFvUq', ''),
+(242, 1, 'Omari Lynch', 'toney.padberg@example.org', '79537668731', '$2y$10$S3hOoAAwNO0Uw/oVi9u4bOBGtykxl79LRjLMvVi8Soh8Zi1m6SJFy', ''),
+(243, 1, 'Kristian Kling', 'naomie48@example.org', '79538482759', '$2y$10$bLOUltivYPpfB6dlY7eIj.z1uhoK/.RXUZvobTbxMMFxRRkApHyH.', ''),
+(244, 1, 'Orlando Cassin Sr.', 'rowena.goyette@example.net', '79536048855', '$2y$10$KhSZh62YavK8LCVpgkHLYeYJ4fgYLKgK/ywTlmL16Sif2X5rnPSsu', ''),
+(245, 1, 'Ms. Jaida Kihn V', 'padberg.claud@example.org', '79538424362', '$2y$10$aNJUI9pBJO5vubLuV3kAF.QnGvIY3qFGz30K3EE32La5fZZed1OIm', ''),
+(246, 1, 'Miss Valentina Huel I', 'ulises15@example.com', '79537282802', '$2y$10$tsKomZunFlAXfj7OxDrrlekbyGDhO2BihswqmGF8MxTxVygqBBPGO', ''),
+(247, 1, 'Christelle DuBuque', 'hahn.solon@example.net', '79534711860', '$2y$10$ORnI6wYpjhgj9mtVaf5wreXQQ0vj6oaoXF2hnk7LNU465jRa299g2', ''),
+(248, 1, 'Dr. Milo O\'Kon DDS', 'sarina92@example.net', '79536873847', '$2y$10$UZIpLOOC4PmWyHeGV.EH6uEVqZdMpEh3OtXQ3uFmNVlqcvU39WwNS', ''),
+(249, 1, 'Alanis Heidenreich IV', 'phomenick@example.com', '79532243639', '$2y$10$IHIWJyVP.S3miSzI4r6oP.LBMu9IqCivPVuQ7esm3LOMLC/yszoCu', ''),
+(250, 1, 'Jennifer Lynch', 'zulauf.sonny@example.org', '79535358289', '$2y$10$QUj24/oW7hN/.dqNYkrcZeg1sz2GMuCRT8BLVBtsci7V4la089x.K', ''),
+(251, 1, 'Casimir Nienow', 'christopher64@example.org', '79535030238', '$2y$10$2YF9bkNHSKrV7jh4iza1Y.4dXp9LhfioYKNDf76cY6zkvW5kjBzd.', ''),
+(252, 1, 'Meaghan Senger', 'deshaun46@example.com', '79535882593', '$2y$10$9bIBDVsh/j0jU/QMjIFWIudmsO5TbSWRY7wtn0AJW4F3VbdD3n2M6', ''),
+(253, 1, 'Philip Hagenes', 'harmony.goodwin@example.com', '79530501763', '$2y$10$5VWa8wtHnWy843KPtR1ExuajKZhTLsOhPMQgul29J/ihuEuWLKiXe', ''),
+(254, 1, 'Connie Weissnat IV', 'daisha51@example.org', '79531824034', '$2y$10$5LQjcCm1CGIHOx0PIQGpDOJdNmooqph0NCGM/yzHJT2KBiaKRjo1C', ''),
+(255, 1, 'Mr. Daron Weissnat V', 'georgiana.jacobs@example.net', '79534847976', '$2y$10$Fz5gucIJYlV60TG1k9XL5OXwelzpaTCgwpPlitIpif2Q7oQjAl3fO', ''),
+(256, 1, 'Glenda Fritsch', 'maximillian67@example.net', '79535081130', '$2y$10$Iw3V921YzXSqkEWcsECAi.QgASL5hEkzkleMGqCjibB9NSKqc5ZyG', ''),
+(325, 1, 'khgjkghjkg', 'kjhgkghj@example.com', '79442341233', '$2y$10$G7i3nEKN7mkVF2fspgu5.OaKI9JJbbZfLrtw3DNuloK97H5oWk3za', NULL),
+(326, 2, 'kjghghjk', 'jhklhjklhkj@example.com', '79442341233', '$2y$10$DuR28ME/ifqW1.6bQBna7.NxFNBA4HJQsiUlEy3I5rXRJyKtc/LW2', NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -1244,6 +1130,7 @@ ALTER TABLE `order_bikes`
 -- Индексы таблицы `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `personal_access_tokens_ibfk_1` (`tokenable_id`);
 
 --
@@ -1255,10 +1142,17 @@ ALTER TABLE `reviews`
   ADD KEY `client_id` (`user_id`);
 
 --
+-- Индексы таблицы `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -1268,7 +1162,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `bikes`
 --
 ALTER TABLE `bikes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'bike id', AUTO_INCREMENT=184;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'bike id', AUTO_INCREMENT=187;
 
 --
 -- AUTO_INCREMENT для таблицы `brands`
@@ -1298,7 +1192,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT для таблицы `colors`
 --
 ALTER TABLE `colors`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- AUTO_INCREMENT для таблицы `migrations`
@@ -1313,16 +1207,28 @@ ALTER TABLE `orders`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT для таблицы `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
 -- AUTO_INCREMENT для таблицы `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'ид обзора', AUTO_INCREMENT=151;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'ид обзора', AUTO_INCREMENT=153;
+
+--
+-- AUTO_INCREMENT для таблицы `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'id клиента', AUTO_INCREMENT=311;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'id клиента', AUTO_INCREMENT=327;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -1374,6 +1280,12 @@ ALTER TABLE `personal_access_tokens`
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`bike_id`) REFERENCES `bikes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

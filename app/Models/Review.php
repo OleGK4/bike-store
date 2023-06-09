@@ -13,13 +13,13 @@ class Review extends Model
     use HasApiTokens, HasFactory, Notifiable;
 
     // BelongsTo relations
-    public function bikes(): BelongsTo
+    public function bike(): BelongsTo
     {
         return $this->BelongsTo(Bike::class);
     }
 
     // If user trying to create a review on a bike that he has never bought, he'll get an error, that he should own this bike to create a review.
-    public function users(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class);
     }
