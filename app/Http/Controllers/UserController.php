@@ -16,19 +16,6 @@ class UserController extends BaseController
         return response()->json(['users' => $users]);
     }
 
-    public function store(Request $request)
-    {
-        $user = new User;
-        $user->role_id = $request->role_id;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        return response()->json(['message' => 'User created', 'user' => $user]);
-    }
-
     public function show($id)
     {
         $user = User::find($id);
@@ -39,15 +26,46 @@ class UserController extends BaseController
         }
     }
 
-    public function update(Request $request, $id)
+    public function store(Request $request)
+    {
+        $user = new User;
+        $user->role_id = $request->role_id;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = Hash::make($request->password);
+        $user->image = $request->image;
+
+        $user->save();
+
+        return response()->json(['message' => 'User created', 'user' => $user]);
+    }
+
+    public function update(Request $request, int $id)
     {
         $user = User::find($id);
+
         if ($user) {
-            $user->role_id = $request->role_id;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->password = Hash::make($request->password);
+            // Обновление значений только для переданных полей модели
+            if ($request->has('role_id')) {
+                $user->role_id = $request->role_id;
+            }
+            if ($request->has('name')) {
+                $user->name = $request->name;
+            }
+            if ($request->has('email')) {
+                $user->email = $request->email;
+            }
+            if ($request->has('phone')) {
+                $user->phone = $request->phone;
+            }
+            if ($request->has('password')) {
+                $user->password = Hash::make($request->password);
+            }
+            if ($request->has('image')) {
+                $user->image = $request->image;
+            }
+
             $user->save();
 
             return response()->json(['message' => 'User updated', 'user' => $user]);

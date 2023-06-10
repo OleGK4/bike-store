@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BikeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -33,13 +34,19 @@ Route::prefix('bikes')->middleware('auth:sanctum')->group(function () {
 });
 
 // Contact
-Route::post('/contact', [ContactController::class, 'sendMessage'])->middleware('auth:sanctum');
+Route::post('/contact', [ContactController::class, 'sendMessage'])->middleware('auth:sanctum', 'is_verify_email');
 
 // Authentication
 Route::prefix('auth')->group(function () {
     Route::post('/signup', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
+
+//    Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->middleware('auth:sanctum')->name('forget.password.get');
+    Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->middleware('auth:sanctum')->name('forget.password.post');
+//    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->middleware('auth:sanctum')->name('reset.password.get');
+    Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->middleware('auth:sanctum')->name('reset.password.post');
 });
 
 // Admin panel

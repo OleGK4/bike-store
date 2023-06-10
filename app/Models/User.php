@@ -28,6 +28,7 @@ class User extends Authenticatable
         'level',
         'password',
         'remember_token',
+        'is_email_verified',
     ];
 
     /**
