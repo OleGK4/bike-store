@@ -12,6 +12,13 @@ class Cart extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'user_id',
+        'updated_at',
+        'created_at',
+    ];
+
+
     // BelongsTo relations
     public function users(): BelongsTo
     {

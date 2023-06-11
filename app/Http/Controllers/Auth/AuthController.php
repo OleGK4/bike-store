@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\UserVerify;
 use Carbon\Carbon;
@@ -41,8 +42,12 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token', ['*'], Carbon::now()->addMinutes(1440));
 
-        $mailToken = Str::random(64);
+        Cart::create([
+            'user_id' => $user['id'],
+        ]);
 
+
+        $mailToken = Str::random(64);
 
         UserVerify::create([
             'user_id' => $user['id'],

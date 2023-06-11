@@ -12,6 +12,10 @@ class OrderBikes extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'order_id',
+        'bike_id',
+    ];
 
     // BelongsTo relations
     public function bikes(): BelongsTo

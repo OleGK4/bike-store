@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cart;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,7 +17,13 @@ class UserSeeder extends Seeder
     {
         User::factory()
             ->count(50)
-            ->has(Review::factory()->count(3))
+            ->has(
+                Review::factory()->count(3)
+            )
+            ->has(
+                Cart::factory()->count(1)
+            )
             ->create();
     }
+
 }

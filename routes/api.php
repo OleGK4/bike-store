@@ -4,12 +4,15 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BikeController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\Contact\ContactController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -25,16 +28,37 @@ use Illuminate\Support\Facades\Route;
 
 // Bikes
 Route::prefix('bikes')->middleware('auth:sanctum')->group(function () {
-    Route::get('/all', [BikeController::class, 'index']);
     Route::get('/{id}', [BikeController::class, 'show']);
-
+    Route::get('/all', [BikeController::class, 'index']);
     Route::prefix('category')->group(function () {
         Route::get('/{id}', [BikeController::class, 'byCategory']);
     });
+    Route::prefix('{bike_id}')->group(function () {
+        // Review interaction
+        Route::prefix('reviews')->group(function () {
+            Route::get('/all', [ReviewController::class, 'reviewsForBike']);
+            Route::get('/add', [ReviewController::class, 'store'])->middleware('is_verify_email');
+            Route::get('/update', [ReviewController::class, 'update'])->middleware('is_verify_email');
+            Route::get('/delete', [ReviewController::class, 'destroy'])->middleware('is_verify_email');
+        });
+        // Add to cart
+        Route::apiResource('add-to-cart',CartController::class);
+    });
 });
 
+
 // Contact
-Route::post('/contact', [ContactController::class, 'sendMessage'])->middleware('auth:sanctum', 'is_verify_email');
+Route::post('/contact', [ContactController::class, 'sendMessage']);
+
+// Cart interaction
+Route::delete('cart/{id}',[CartController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('cart',[CartController::class, 'index'])->middleware('auth:sanctum');
+Route::post('cart',[CartController::class, 'store'])->middleware('auth:sanctum');
+
+// Orders interaction
+Route::apiResource('orders',OrderController::class)->middleware('auth:sanctum');
+
+
 
 // Authentication
 Route::prefix('auth')->group(function () {
@@ -48,6 +72,14 @@ Route::prefix('auth')->group(function () {
 //    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->middleware('auth:sanctum')->name('reset.password.get');
     Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->middleware('auth:sanctum')->name('reset.password.post');
 });
+
+// User profile
+Route::prefix('profile')->middleware('auth:sanctum')->group(function () {
+    Route::apiResource('users', UserProfileController::class);
+    Route::apiResource('cart', CartController::class);
+    Route::apiResource('orders', OrderController::class);
+});
+
 
 // Admin panel
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function () {
@@ -69,6 +101,6 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function ()
 
 
 
-Route::get('/orders', function () {
-    // Token has both "check-status" and "place-orders" abilities...
-})->middleware('abilities:check-status,place-orders');
+//Route::get('/orders', function () {
+//    // Token has both "check-status" and "place-orders" abilities...
+//})->middleware('abilities:check-status,place-orders');

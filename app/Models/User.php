@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,7 +26,6 @@ class User extends Authenticatable
         'role_id',
         'email',
         'phone',
-        'level',
         'password',
         'remember_token',
         'is_email_verified',
@@ -61,6 +61,7 @@ class User extends Authenticatable
     // BelongsTo relations
     public function role(): BelongsTo
     {
+
         return $this->BelongsTo(Role::class);
     }
 
@@ -74,5 +75,16 @@ class User extends Authenticatable
     public function reviews(): HasMany
     {
         return $this->HasMany(Review::class);
+    }
+
+    // HasManyThrough relations
+    public function orderBikes(): HasManyThrough
+    {
+        return $this->hasManyThrough(OrderBikes::class, Order::class);
+    }
+
+    public function cartBikes(): HasManyThrough
+    {
+        return $this->hasManyThrough(CartBikes::class, Cart::class);
     }
 }

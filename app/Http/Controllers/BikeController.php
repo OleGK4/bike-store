@@ -46,7 +46,7 @@ class BikeController extends BaseController
         return response()->json(['message' => 'Bike created', 'bike' => $bike]);
     }
 
-    public function update(Request $request,int $id)
+    public function update(Request $request, int $id)
     {
         $bike = Bike::find($id);
 

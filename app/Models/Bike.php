@@ -14,6 +14,33 @@ class Bike extends Model
     public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'brand_id ',
+        'category_id',
+        'model',
+        'color_id',
+        'description',
+        'price',
+        'image',
+    ];
+    protected $visible = [
+        'id',
+        'brand',
+        'category',
+        'model',
+        'color',
+        'description',
+        'price',
+        'image',
+    ];
+
+    protected $hidden = [
+        'brand_id',
+        'category_id',
+        'color_id',
+    ];
+
+
     // HasMany relations
     public function cartBikes(): HasMany
     {

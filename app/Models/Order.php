@@ -13,8 +13,13 @@ class Order extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'user_id',
+        'price',
+    ];
+
     // HasMany relations
-    public function bikes(): HasMany
+    public function orderBikes(): HasMany
     {
         return $this->HasMany(OrderBikes::class);
     }
