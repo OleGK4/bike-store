@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Gate;
 
 class ReviewController extends BaseController
 {
-    public function reviewsForBike(Request $request,int $bike_id)
+    public function reviewsForBike(Request $request, int $bike_id)
     {
         $reviews = Review::where('bike_id', $bike_id)->paginate(5);
-        if (!$reviews) {
+        if ($reviews->isEmpty()) {
             return response()->json(['message' => 'There are no reviews for this bike!'], 404);
         }
+
         return new ReviewCollection($reviews);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,16 +13,18 @@ class UserProfileController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $userReviews = Review::where('user_id', $user->id)->get();
-        $userCart = $user->cartBikes;
-        $userOrders = $user->orderBikes;
-        return response()->json
-        ([
-            'user' => $user,
-            'reviews' => $userReviews,
-            'cart' => $userCart,
-            'orders' => $userOrders,
-        ]);
+//        $userReviews = Review::where('user_id', $user->id)->get();
+//        $userCart = $user->cartBikes;
+//        $userOrders = $user->orderBikes;
+        return new UserResource($user);
+
+//        return response()->json
+//        ([
+//            'user' => $user,
+//            'reviews' => $userReviews,
+//            'cart' => $userCart,
+//            'orders' => $userOrders,
+//        ]);
     }
 
     public function update(Request $request)

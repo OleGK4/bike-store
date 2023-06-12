@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BikeResource;
 use App\Models\Bike;
 use App\Http\Resources\BikeCollection;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -24,8 +25,19 @@ class BikeController extends BaseController
     public function show(string $id)
     {
         $bike = Bike::find($id);
+
+        $reviews = Review::where('bike_id', $id)->paginate(5);
+
+        if (!$reviews->isEmpty()) {
+            $ratingSum = $reviews->sum('rating');
+            $count = $reviews->count();
+            $average = $ratingSum / $count;          // NOT DONE!
+        } else {
+            $average = 0;
+        }
+
         if ($bike) {
-            return new BikeResource($bike);
+            return new BikeResource($bike, $average);
         } else {
             return response()->json(['message' => 'Bike not found'], 404);
         }

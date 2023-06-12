@@ -15,10 +15,12 @@ class OrderBikes extends Model
     protected $fillable = [
         'order_id',
         'bike_id',
+        'updated_at',
+        'created_at',
     ];
 
     // BelongsTo relations
-    public function bikes(): BelongsTo
+    public function bike(): BelongsTo
     {
         return $this->BelongsTo(Bike::class);
     }

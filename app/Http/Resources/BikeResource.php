@@ -24,7 +24,14 @@ class BikeResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'image' => $this->image,
+            'average_rating' => $this->average_rating,
         ];
+
+
+
+
+
+
 //        return [
 //            'id' => $this->id,
 //            'brand_id' => $this->brand_id,

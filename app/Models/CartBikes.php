@@ -17,17 +17,19 @@ class CartBikes extends Model
     protected $fillable = [
         'bike_id',
         'cart_id',
+        'updated_at',
+        'created_at',
     ];
 
 
     // BelongsTo relations
-    public function cart(): BelongsTo
-    {
-        return $this->BelongsTo(Cart::class);
-    }
-
     public function bike(): BelongsTo
     {
         return $this->BelongsTo(Bike::class);
+    }
+
+    public function cart(): BelongsTo
+    {
+        return $this->BelongsTo(Cart::class);
     }
 }

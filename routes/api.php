@@ -36,8 +36,8 @@ Route::prefix('bikes')->middleware('auth:sanctum')->group(function () {
     Route::prefix('{bike_id}')->group(function () {
         // Review interaction
         Route::prefix('reviews')->group(function () {
-            Route::get('/all', [ReviewController::class, 'reviewsForBike']);
-            Route::get('/add', [ReviewController::class, 'store'])->middleware('is_verify_email');
+            Route::get('/all', [ReviewController::class, 'reviewsForBike'])->middleware('is_verify_email');
+            Route::post('/add', [ReviewController::class, 'store'])->middleware('is_verify_email');
             Route::get('/update', [ReviewController::class, 'update'])->middleware('is_verify_email');
             Route::get('/delete', [ReviewController::class, 'destroy'])->middleware('is_verify_email');
         });

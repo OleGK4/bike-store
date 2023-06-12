@@ -29,6 +29,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'is_email_verified',
+        'image',
     ];
 
     /**
@@ -55,13 +56,12 @@ class User extends Authenticatable
     // HasOne relations
     public function cart(): HasOne
     {
-        return $this->HasOne(Cart::class);
+        return $this->HasOne(Cart::class, 'user_id');
     }
 
     // BelongsTo relations
     public function role(): BelongsTo
     {
-
         return $this->BelongsTo(Role::class);
     }
 
