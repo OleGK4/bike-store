@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Resources\OrderResource;
 use App\Models\Cart;
 use App\Models\CartBikes;
 use App\Models\Order;
@@ -17,15 +18,7 @@ class OrderController extends BaseController
             abort(403, 'Unauthorized');
         }
 
-        $userOrders = $user->orders()->with('orderBikes')->get();
-
-        if (!$userOrders) {
-            return response()->json(['message' => 'Orders not found!'], 404);
-        }
-        return response()->json
-        ([
-            'orders' => $userOrders,
-        ]);
+        return OrderResource::collection($user->orders);
     }
 
     public function store(Request $request)

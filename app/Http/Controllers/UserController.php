@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Routing\Controller as BaseController;
@@ -13,14 +14,14 @@ class UserController extends BaseController
     public function index()
     {
         $users = User::all();
-        return response()->json(['users' => $users]);
+        return response()->json(['users' => UserResource::collection($users)]);
     }
 
     public function show($id)
     {
         $user = User::find($id);
         if ($user) {
-            return response()->json(['user' => $user]);
+            return response()->json(['user' => new UserResource($user)]);
         } else {
             return response()->json(['message' => 'User not found'], 404);
         }

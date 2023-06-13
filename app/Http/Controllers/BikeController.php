@@ -1,19 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Resources\BikeCollection;
 use App\Http\Resources\BikeResource;
 use App\Models\Bike;
-use App\Http\Resources\BikeCollection;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class BikeController extends BaseController
 {
-    public function byCategory(string $id)
+    public function byCategory(string $category)
     {
-        $bikes = Bike::where('category_id', $id)->paginate(10);
-        return new BikeCollection($bikes);
+        $searched = Bike::whereHas('category', function ($query) use ($category) {
+            $query->where('name', 'LIKE', '%' . $category . '%');
+        })->paginate(10);
+
+        return new BikeCollection($searched);
     }
 
     public function index()
@@ -31,13 +35,16 @@ class BikeController extends BaseController
         if (!$reviews->isEmpty()) {
             $ratingSum = $reviews->sum('rating');
             $count = $reviews->count();
-            $average = $ratingSum / $count;          // NOT DONE!
+            $average = $ratingSum / $count;
         } else {
             $average = 0;
         }
 
         if ($bike) {
-            return new BikeResource($bike, $average);
+            return response()->json([
+                'bike' => new BikeResource($bike),
+                'average_rating' => $average,
+            ]);
         } else {
             return response()->json(['message' => 'Bike not found'], 404);
         }

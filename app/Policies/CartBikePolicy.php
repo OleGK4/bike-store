@@ -49,10 +49,10 @@ class CartBikePolicy
             : Response::deny('You do not own this cart!');
     }
 
-    public function create(User $user, CartBikes $cartBike): Response
+    public function create(User $user): Response
     {
-        return $user->id === $cartBike->cart->user_id
+        return $user->is_email_verified === 1
             ? Response::allow()
-            : Response::deny('You do not own this cart!');
+            : Response::deny('You must verify your account to add products to cart!');
     }
 }

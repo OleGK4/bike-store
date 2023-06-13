@@ -13,8 +13,8 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,7 +42,7 @@ Route::prefix('bikes')->middleware('auth:sanctum')->group(function () {
             Route::get('/delete', [ReviewController::class, 'destroy'])->middleware('is_verify_email');
         });
         // Add to cart
-        Route::apiResource('add-to-cart',CartController::class);
+        Route::apiResource('add-to-cart', CartController::class);
     });
 });
 
@@ -51,20 +51,19 @@ Route::prefix('bikes')->middleware('auth:sanctum')->group(function () {
 Route::post('/contact', [ContactController::class, 'sendMessage']);
 
 // Cart interaction
-Route::delete('cart/{id}',[CartController::class, 'destroy'])->middleware('auth:sanctum');
-Route::get('cart',[CartController::class, 'index'])->middleware('auth:sanctum');
-Route::post('cart',[CartController::class, 'store'])->middleware('auth:sanctum');
+Route::delete('cart/{id}', [CartController::class, 'destroy'])->middleware('auth:sanctum', 'is_verify_email');
+Route::get('cart', [CartController::class, 'index'])->middleware('auth:sanctum', 'is_verify_email');
+Route::post('cart', [CartController::class, 'store'])->middleware('auth:sanctum', 'is_verify_email');
 
 // Orders interaction
-Route::apiResource('orders',OrderController::class)->middleware('auth:sanctum');
-
+Route::apiResource('orders', OrderController::class)->middleware('auth:sanctum');
 
 
 // Authentication
 Route::prefix('auth')->group(function () {
     Route::post('/signup', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
 
 //    Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->middleware('auth:sanctum')->name('forget.password.get');
@@ -91,16 +90,3 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function ()
     Route::apiResource('brands', BrandController::class);
     Route::apiResource('roles', RoleController::class);
 });
-
-
-
-
-
-
-
-
-
-
-//Route::get('/orders', function () {
-//    // Token has both "check-status" and "place-orders" abilities...
-//})->middleware('abilities:check-status,place-orders');

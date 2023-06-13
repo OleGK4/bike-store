@@ -7,12 +7,12 @@ use App\Models\Cart;
 use App\Models\User;
 use App\Models\UserVerify;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -54,7 +54,7 @@ class AuthController extends Controller
             'token' => $mailToken
         ]);
 
-        Mail::send('emails.verificationEmail', ['token' => $mailToken], function($message) use($data){
+        Mail::send('emails.verificationEmail', ['token' => $mailToken], function ($message) use ($data) {
             $message->to($data['email']);
             $message->subject('Email Verification Mail');
             $message->from('bike-store@mail.su', 'Bike-store');
@@ -68,9 +68,9 @@ class AuthController extends Controller
         $verifyUser = UserVerify::where('token', $token)->first();
         $message = 'Sorry your email cannot be identified.';
 
-        if(!is_null($verifyUser) ){
+        if (!is_null($verifyUser)) {
             $user = $verifyUser->user;
-            if(!$user->is_email_verified) {
+            if (!$user->is_email_verified) {
                 $verifyUser->user->is_email_verified = 1;
                 $verifyUser->user->save();
                 $message = "Your e-mail is verified.";
@@ -85,6 +85,17 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        $validator = Validator::make($credentials, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return new JsonResponse(['errors' => $errors], 422);
+        }
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('auth_token', ['*'], Carbon::now()->addMinutes(1440));
@@ -94,10 +105,11 @@ class AuthController extends Controller
         return new JsonResponse(['error' => 'Invalid credentials'], 401);
     }
 
-    public function logout(): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
-        auth()->logout();
-
+        $user = $request->user();
+        $user->tokens()->delete();
+        Auth::guard('web')->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
 }

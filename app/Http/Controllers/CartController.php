@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\CartBikes;
 use Illuminate\Http\Request;
@@ -11,21 +12,12 @@ class CartController extends BaseController
     public function index(Request $request)
     {
         $user = $request->user();
-        $cartId = $user->cart->id;
 
-        if ($request->user()->cannot('viewAny', CartBikes::class)) {
+        if ($request->user()->cannot('viewAny', Cart::class)) {
             abort(403, 'Unauthorized');
         }
+        return new CartResource($user->cart);
 
-        $cartBikes = CartBikes::where('cart_id', $cartId)->get();
-
-        if (!$cartBikes) {
-            return response()->json(['message' => 'Bike not found'], 404);
-        }
-        return response()->json
-        ([
-            'bikes' => $cartBikes,
-        ]);
     }
 
     public function store(Request $request)

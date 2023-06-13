@@ -48,10 +48,10 @@ class OrderBikePolicy
             : Response::deny('You do not own this orders!');
     }
 
-    public function create(User $user, OrderBikes $orderBike): Response
+    public function create(User $user): Response
     {
-        return $user->id === $orderBike->orders->user_id
+        return $user->is_email_verified === 1
             ? Response::allow()
-            : Response::deny('You do not own this orders!');
+            : Response::deny('You must verify your account to order products!');
     }
 }

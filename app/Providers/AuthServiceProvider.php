@@ -13,9 +13,8 @@ use App\Policies\CartPolicy;
 use App\Policies\OrderBikePolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\ReviewPolicy;
-use Illuminate\Auth\Notifications\ResetPassword;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -30,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         Order::class => OrderPolicy::class,
         OrderBikes::class => OrderBikePolicy::class,
         Review::class => ReviewPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -38,14 +38,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
-//        ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
-//            return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
-//        });
-
-//        Gate::define('update-review', function (User $user, Review $review) {
-//            return ($user->id === $review->user_id || $user->role_id === 2);
-//        });
-        //
     }
 }

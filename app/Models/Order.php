@@ -25,7 +25,7 @@ class Order extends Model
     }
 
     // BelongsTo relations
-    public function users(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class);
     }

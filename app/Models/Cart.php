@@ -23,7 +23,7 @@ class Cart extends Model
     // HasMay relations
     public function cartBikes(): HasMany
     {
-        return $this->HasMany(CartBikes::class, 'cart_id');
+        return $this->HasMany(CartBikes::class);
     }
 
     // BelongsTo relations

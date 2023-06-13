@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+// Ресурс юзера, что бы вложить в него обзоры, корзину и проч.
 class UserResource extends JsonResource
 {
     /**
@@ -19,9 +20,11 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-//            'reviews' => ReviewResource::collection($this->reviews),
-            'cart' => CartResource::collection($this->cart), // Issue
-//            'orders' => OrderResource::collection($this->orders),
-        ]; // Ресурс юзера, что бы вложить в него обзоры, корзину и проч.
+            'image' => $this->image,
+            'is_email_verified' => $this->is_email_verified,
+            'reviews' => ReviewResource::collection($this->reviews),
+            'cart' => new CartResource($this->cart),
+            'orders' => OrderResource::collection($this->orders),
+        ];
     }
 }

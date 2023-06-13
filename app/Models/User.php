@@ -56,7 +56,7 @@ class User extends Authenticatable
     // HasOne relations
     public function cart(): HasOne
     {
-        return $this->HasOne(Cart::class, 'user_id');
+        return $this->HasOne(Cart::class);
     }
 
     // BelongsTo relations

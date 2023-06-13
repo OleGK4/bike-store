@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Bike;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -36,9 +35,9 @@ class ReviewPolicy
             : Response::deny('You do not own this review!');
     }
 
-    public function create(User $user, Bike $bike): Response
+    public function create(User $user, Review $review): Response
     {
-        return $user->orders->orderBikes->bike_id === $bike->id
+        return $user->orderBikes->bike_id === $review->bike_id
             ? Response::allow()
             : Response::deny('You must buy this bike to make a review!');
     }

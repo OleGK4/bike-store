@@ -16,9 +16,9 @@ class CartResource extends JsonResource
     {
         return [
             'id' => $this->id,
-//            'user' => $this->users->name,
-//            'updated_at' => $this->updated_at,
-//            'bikes' => CartBikesResource::collection($this->cartBikes),
+            'user' => $this->user->name,
+            'updated_at' => $this->updated_at,
+            'bikes' => CartBikesResource::collection($this->cartBikes),
         ];
     }
 }
