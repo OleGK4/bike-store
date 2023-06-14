@@ -22,7 +22,7 @@ php artisan serve --host=192.168.13.50 --port=8000
 ```
 ### DB
 
-- **[bike-store.zip](https://github.com/OleGK4/bike-store/files/11711457/bike-store.zip)**
+- **[bike-store.zip](https://github.com/OleGK4/bike-store/files/11731639/bike-store.zip)**
 
 
 ## Documentation & Manuals
