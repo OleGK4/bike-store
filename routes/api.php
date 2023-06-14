@@ -38,25 +38,11 @@ Route::prefix('bikes')->middleware('auth:sanctum')->group(function () {
         Route::prefix('reviews')->group(function () {
             Route::get('/all', [ReviewController::class, 'reviewsForBike'])->middleware('is_verify_email');
             Route::post('/add', [ReviewController::class, 'store'])->middleware('is_verify_email');
-            Route::get('/update', [ReviewController::class, 'update'])->middleware('is_verify_email');
-            Route::get('/delete', [ReviewController::class, 'destroy'])->middleware('is_verify_email');
         });
         // Add to cart
-        Route::apiResource('add-to-cart', CartController::class);
+        Route::post('add-to-cart', [CartController::class, 'store'])->middleware('is_verify_email');
     });
 });
-
-
-// Contact
-Route::post('/contact', [ContactController::class, 'sendMessage']);
-
-// Cart interaction
-Route::delete('cart/{id}', [CartController::class, 'destroy'])->middleware('auth:sanctum', 'is_verify_email');
-Route::get('cart', [CartController::class, 'index'])->middleware('auth:sanctum', 'is_verify_email');
-Route::post('cart', [CartController::class, 'store'])->middleware('auth:sanctum', 'is_verify_email');
-
-// Orders interaction
-Route::apiResource('orders', OrderController::class)->middleware('auth:sanctum');
 
 
 // Authentication
@@ -72,21 +58,43 @@ Route::prefix('auth')->group(function () {
     Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->middleware('auth:sanctum')->name('reset.password.post');
 });
 
+// Contact e-mail
+Route::post('/contact', [ContactController::class, 'sendMessage']);
+
 // User profile
 Route::prefix('profile')->middleware('auth:sanctum')->group(function () {
+
+    // Profile interaction
     Route::apiResource('users', UserProfileController::class);
-    Route::apiResource('cart', CartController::class);
-    Route::apiResource('orders', OrderController::class);
+    Route::put('users/{id?}', [UserProfileController::class, 'update']);
+    Route::delete('users/{id?}', [UserProfileController::class, 'destroy']);
+
+    // Cart interaction
+    Route::apiResource('cart', CartController::class)->middleware('is_verify_email');
+    Route::delete('cart/{id}', [CartController::class, 'destroy'])->middleware('auth:sanctum', 'is_verify_email');
+    Route::get('cart', [CartController::class, 'index'])->middleware('auth:sanctum', 'is_verify_email');
+
+    // Orders interaction
+    Route::apiResource('orders', OrderController::class)->middleware('is_verify_email');
+    Route::get('orders', [OrderController::class, 'userOrders'])->middleware('is_verify_email');
+
+    // Reviews interaction
+    Route::get('reviews/all', [ReviewController::class, 'userReviews'])->middleware('is_verify_email');
+    Route::put('reviews/{id}', [ReviewController::class, 'update'])->middleware('is_verify_email');
+    Route::delete('reviews/{id}', [ReviewController::class, 'destroy'])->middleware('is_verify_email');
 });
 
 
 // Admin panel
-Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function () {
-    Route::apiResource('users', UserController::class);
-    Route::apiResource('bikes', BikeController::class);
-    Route::apiResource('reviews', ReviewController::class);
-    Route::apiResource('colors', ColorController::class);
-    Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('brands', BrandController::class);
-    Route::apiResource('roles', RoleController::class);
+Route::prefix('admin')->middleware(['auth:sanctum', 'admin', 'is_verify_email'])->group(function () {
+    Route::apiResources([
+        'reviews' => ReviewController::class,
+        'colors' => ColorController::class,
+        'bikes' => BikeController::class,
+        'brands' => BrandController::class,
+        'users' => UserController::class,
+        'roles' => RoleController::class,
+        'categories' => CategoryController::class,
+        'orders' => OrderController::class,
+    ]);
 });

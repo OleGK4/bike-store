@@ -18,7 +18,7 @@ class IsVerifyEmail
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
-        if ($user && !$user->is_email_verified) {
+        if ($user && $user->is_email_verified === 0) {
             return response()->json([
                 'message' => 'You need to confirm your account. We have sent you an activation code, please check your e-mail.'
             ], 401);

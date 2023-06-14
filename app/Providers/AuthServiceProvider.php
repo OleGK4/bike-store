@@ -15,6 +15,7 @@ use App\Policies\OrderPolicy;
 use App\Policies\ReviewPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -38,5 +39,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+
+//        Gate::define('delete-cart-bike', function (User $user, CartBikes $cartBike) {
+//            return $user->id === $cartBike->cart->user_id;
+//        });
     }
 }

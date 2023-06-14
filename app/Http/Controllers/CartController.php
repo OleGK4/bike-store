@@ -6,16 +6,13 @@ use App\Models\Cart;
 use App\Models\CartBikes;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Gate;
 
 class CartController extends BaseController
 {
     public function index(Request $request)
     {
         $user = $request->user();
-
-        if ($request->user()->cannot('viewAny', Cart::class)) {
-            abort(403, 'Unauthorized');
-        }
         return new CartResource($user->cart);
 
     }
@@ -28,10 +25,9 @@ class CartController extends BaseController
         if (!$bikeId) {
             return response()->json(['message' => 'Invalid request'], 400);
         }
+
         $cartBike = new CartBikes;
-        if ($request->user()->cannot('create', $cartBike)) {
-            abort(403, 'Unauthorized');
-        }
+
         $cartBike->bike_id = $bikeId;
         $cartBike->cart_id = $user->cart->id;
         $cartBike->save();
@@ -47,7 +43,6 @@ class CartController extends BaseController
     public function destroy(Request $request)
     {
         $user = $request->user();
-
         $cartBike = CartBikes::find($request->id);
 
         if (!$cartBike) {
@@ -55,7 +50,7 @@ class CartController extends BaseController
         }
 
         if ($user->cannot('delete', $cartBike)) {
-            abort(403, 'Unauthorized');
+            abort(403, 'You do not own this cart!');
         }
 
         $cartBike->delete();

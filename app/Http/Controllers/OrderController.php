@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Cart;
 use App\Models\CartBikes;
@@ -11,22 +12,25 @@ use Illuminate\Routing\Controller as BaseController;
 
 class OrderController extends BaseController
 {
-    public function index(Request $request)
+    public function userOrders(Request $request)
     {
         $user = $request->user();
-        if ($request->user()->cannot('viewAny', OrderBikes::class)) {
-            abort(403, 'Unauthorized');
-        }
-
         return OrderResource::collection($user->orders);
+    }
+
+    public function index(Request $request)
+    {
+        $orders = Order::paginate(5);
+        return new OrderCollection($orders);
     }
 
     public function store(Request $request)
     {
         $user = $request->user();
         $orderBikes = new OrderBikes;
+
         if ($user->cannot('create', $orderBikes)) {
-            abort(403, 'Unauthorized');
+            abort(403, 'You must verify your account to order products!');
         }
 
         $cartId = $user->cart->id;
@@ -50,7 +54,7 @@ class OrderController extends BaseController
         ]);
 
         foreach ($cartBikes as $bike){
-            OrderBikes::create([
+            $orderBikes::create([
                 'order_id' => $newOrder->id,
                 'bike_id' => $bike->bike_id
             ]);

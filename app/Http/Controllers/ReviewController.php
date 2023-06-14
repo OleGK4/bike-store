@@ -27,59 +27,76 @@ class ReviewController extends BaseController
         return new ReviewCollection($reviews);
     }
 
+    public function userReviews(Request $request)
+    {
+        $user = $request->user();
+        $reviews = $user->reviews()->paginate(5);
+        return new ReviewCollection($reviews);
+    }
+
     public function show(int $id)
     {
         $review = Review::find($id);
-        if ($review) {
-            return new ReviewResource($review);
-        } else {
+        if (!$review) {
             return response()->json(['message' => 'Review not found'], 404);
         }
+
+        return new ReviewResource($review);
     }
 
     public function store(Request $request)
     {
-        $review = new Review;
-        if ($request->user()->cannot('create', $review)) {
-            abort(403, 'Unauthorized');
-        }
-        $review->bike_id = $request->bike_id;
-        $review->user_id = $request->user()->id;
-        $review->text = $request->text;
-        $review->rating = $request->rating;
-        $review->save();
+        $user = $request->user();
+        $bikeId = $request->bike_id;
 
-        return response()->json(['message' => 'Review created', 'review' => $review]);
+        $orderBikes = $user->orderBikes;
+
+        foreach ($orderBikes as $bike) {
+            if ($bike->bike_id == $bikeId) {
+                $review = new Review;
+
+                $review->bike_id = $bikeId;
+                $review->user_id = $request->user()->id;
+                $review->text = $request->text;
+                $review->rating = $request->rating;
+
+                $review->save();
+
+                return response()->json(['message' => 'Review created', 'review' => $review]);
+            }
+        }
+        abort(403, 'You must buy this bike to make a review!');
     }
 
     public function update(Request $request, int $id)
     {
-
         $review = Review::find($id);
-        if ($request->user()->cannot('update', $review)) {
-            abort(403, 'Unauthorized');
-        }
-        if ($review) {
-            $review->text = $request->text;
-            $review->rating = $request->rating;
-            $review->save();
-            return response()->json(['message' => 'Review updated', 'review' => $review]);
-        } else {
+        if (!$review) {
             return response()->json(['message' => 'Review not found'], 404);
         }
+        $user = $request->user();
+
+        if ($user->cannot('update', $review)) {
+            abort(403, 'Unauthorized');
+        }
+
+        $review->text = $request->text;
+        $review->rating = $request->rating;
+        $review->save();
+
+        return response()->json(['message' => 'Review updated', 'review' => $review]);
     }
 
     public function destroy(Request $request, int $id)
     {
         $review = Review::find($id);
+        if(!$review){
+            return response()->json(['message' => 'Review not found'], 404);
+        }
         if ($request->user()->cannot('delete', $review)) {
             abort(403, 'Unauthorized');
         }
-        if ($review) {
-            $review->delete();
-            return response()->json(['message' => 'Review deleted']);
-        } else {
-            return response()->json(['message' => 'Review not found'], 404);
-        }
+        $review->delete();
+        return response()->json(['message' => 'Review deleted']);
     }
 }

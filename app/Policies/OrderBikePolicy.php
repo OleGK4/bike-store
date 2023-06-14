@@ -15,11 +15,6 @@ class OrderBikePolicy
     {
         //
     }
-    public function before(User $user): ?bool
-    {
-        return $user->role->name === 'Administrator';
-    }
-
     public function update(User $user, OrderBikes $orderBike): Response
     {
         return $user->id === $orderBike->orders->user_id
@@ -53,5 +48,10 @@ class OrderBikePolicy
         return $user->is_email_verified === 1
             ? Response::allow()
             : Response::deny('You must verify your account to order products!');
+    }
+
+    public function after(User $user): ?bool
+    {
+        return $user->role->name === 'Administrator';
     }
 }
