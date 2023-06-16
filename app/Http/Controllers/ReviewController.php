@@ -7,6 +7,7 @@ use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Validator;
 
 
 class ReviewController extends BaseController
@@ -46,6 +47,15 @@ class ReviewController extends BaseController
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'text' => 'required|string',
+            'rating' => 'required|integer|between:1,10',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $user = $request->user();
         $bikeId = $request->bike_id;
 
@@ -70,12 +80,21 @@ class ReviewController extends BaseController
 
     public function update(Request $request, int $id)
     {
+        $validator = Validator::make($request->all(), [
+            'text' => 'required|string',
+            'rating' => 'required|integer|between:1,10',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $review = Review::find($id);
         if (!$review) {
             return response()->json(['message' => 'Review not found'], 404);
         }
-        $user = $request->user();
 
+        $user = $request->user();
         if ($user->cannot('update', $review)) {
             abort(403, 'Unauthorized');
         }

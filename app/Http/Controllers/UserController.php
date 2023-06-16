@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class UserController extends BaseController
@@ -29,6 +30,19 @@ class UserController extends BaseController
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'role_id' => 'required|integer',
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required',
+            'password' => 'required|string',
+            'image' => 'nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $user = new User;
         $user->role_id = $request->role_id;
         $user->name = $request->name;
@@ -44,6 +58,19 @@ class UserController extends BaseController
 
     public function update(Request $request, int $id)
     {
+        $validator = Validator::make($request->all(), [
+            'role_id' => 'integer',
+            'name' => 'string',
+            'email' => 'email|unique:users,email,' . $id,
+            'phone' => 'string',
+            'password' => 'string',
+            'image' => 'nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $user = User::find($id);
 
         if ($user) {
