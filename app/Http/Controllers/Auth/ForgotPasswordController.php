@@ -44,10 +44,6 @@ class ForgotPasswordController extends Controller
         });
 
         return new JsonResponse(['message' => 'We have e-mailed your password reset link!']);
-
-        // showResetPasswordForm ** FRONT-END FORM
-
-
     }
     /**
      * Write code on Method
@@ -56,8 +52,6 @@ class ForgotPasswordController extends Controller
      */
     public function submitResetPasswordForm(Request $request)
     {
-        dump($request);
-
         $request->validate([
             'email' => 'required|email|exists:users',
             'password' => 'required|string|confirmed',
