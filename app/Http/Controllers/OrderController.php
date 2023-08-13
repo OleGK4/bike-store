@@ -30,7 +30,7 @@ class OrderController extends BaseController
         $orderBikes = new OrderBikes;
 
         if ($user->cannot('create', $orderBikes)) {
-            abort(403, 'You must verify your account to order products!');
+            return response()->json(['message' => 'You must verify your account to order products!'], 403);
         }
 
         $cartId = $user->cart->id;

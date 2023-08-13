@@ -18,6 +18,6 @@ class isAdmin
         if ($request->user()->role->name === 'Administrator') {
             return $next($request);
         }
-        abort(403, 'Unauthorized');
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 }

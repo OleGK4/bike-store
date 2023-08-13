@@ -50,7 +50,7 @@ class CartController extends BaseController
         }
 
         if ($user->cannot('delete', $cartBike)) {
-            abort(403, 'You do not own this cart!');
+            return response()->json(['message' => 'You do not own this cart!'], 403);
         }
 
         $cartBike->delete();

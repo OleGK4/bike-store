@@ -75,7 +75,8 @@ class ReviewController extends BaseController
                 return response()->json(['message' => 'Review created', 'review' => $review]);
             }
         }
-        abort(403, 'You must buy this bike to make a review!');
+        return response()->json(['message' => 'You must buy this bike to make a review!'], 403);
+
     }
 
     public function update(Request $request, int $id)
@@ -96,7 +97,7 @@ class ReviewController extends BaseController
 
         $user = $request->user();
         if ($user->cannot('update', $review)) {
-            abort(403, 'Unauthorized');
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $review->text = $request->text;
@@ -113,7 +114,7 @@ class ReviewController extends BaseController
             return response()->json(['message' => 'Review not found'], 404);
         }
         if ($request->user()->cannot('delete', $review)) {
-            abort(403, 'Unauthorized');
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
         $review->delete();
         return response()->json(['message' => 'Review deleted']);
